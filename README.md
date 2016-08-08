@@ -11,7 +11,7 @@ npm install nano-test
 
 var functest = require("nano-test");
 
-var test = new funtest();
+var test = new functest();
 
 test.add ("example test", "examplefunction('123456')", "==", "93");
 
