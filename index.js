@@ -1,13 +1,34 @@
 exports.test = function () {
     this.history = [];
     this.tests = [];
+    this.interactivrConsole = "";
+    this.detected = {
+        interactiveConsole: 0,
+    }
+    this.check = function () {
+        try {
+            var ic = require("interactive-console");
+            this.interactivrConsole = new ic.console();
+            that.detected.interactiveConsole = 1;
+        } catch (e) {
+            that.detected.interactiveConsole = 0;
+        }
+    }
     this.printLog = function () {
         for (var i = 0; i < this.history.length; i++)
-            if (this.history[i].result === "ok"){
-            console.log(this.history[i].name + " : " + this.history[i].result+" - "+this.history[i].time+" ms");
-        }else{
-            console.log(this.history[i].name + " : " + this.history[i].result+" \n --- value --- \n"+JSON.stringify(this.history[i].value)+" \n");        
-        }
+            if (this.history[i].result === "ok") {
+                if (that.detected.interactiveConsole === 0) {
+                    console.log(this.history[i].name + " : " + this.history[i].result + " - " + this.history[i].time + " ms");
+                } else {
+                    this.interactivrConsole.printLn(this.history[i].name + " : " + this.history[i].result + " - " + this.history[i].time + " ms " + this.interactivrConsole.style("✓", {color: "green"}));
+                }
+            } else {
+                if (that.detected.interactiveConsole === 0) {
+                    console.log(this.history[i].name + " : " + this.history[i].result + " --- value --- " + JSON.stringify(this.history[i].value) + " \n");
+                } else {
+                    this.interactivrConsole.printLn(this.history[i].name + " : " + this.history[i].result + "  --- value --- " + JSON.stringify(this.history[i].value) + " " + this.interactivrConsole.style("✗", {color: "red"}));
+                }
+            }
     }
     this.addLog = function (input) {
         this.history.push({
@@ -35,7 +56,7 @@ exports.test = function () {
         var endTime;
         try {
             startTime = +new Date;
-            eval("value = "+test);
+            eval("value = " + test);
             endTime = +new Date;
             time = (endTime - startTime).toString();
             result = "ok";
@@ -55,7 +76,7 @@ exports.test = function () {
                     result = "ok";
                 } else {
                     result = "faild";
-                }                
+                }
             } else if (rule == "===") {
                 if (value === sample) {
                     result = "ok";
@@ -87,14 +108,16 @@ exports.test = function () {
                     result = "faild";
                 }
             }
-        return {time: time, name: name, result: result, error: error, value: value, sample:sample};
+        return {time: time, name: name, result: result, error: error, value: value, sample: sample};
     }
     this.run = function () {
-        for (var i = 0; i < this.tests.length; i++){
+        for (var i = 0; i < this.tests.length; i++) {
             this.addLog(this.test(this.tests[i].name, this.tests[i].test, this.tests[i].rule, this.tests[i].sample));
         }
-            this.printLog();
+        this.printLog();
     }
+    var that = this;
+    this.check();
 }
 
 

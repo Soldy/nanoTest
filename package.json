@@ -1,10 +1,10 @@
 {
   "name": "nano-test",
-  "version": "0.0.1",
+  "version": "0.0.2-r2",
   "description": "nano size unit test toolkit.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",

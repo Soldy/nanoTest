@@ -1,19 +1,24 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 var nanotest = require('./index.js').test;
 var nanoTest = new nanotest();
-var waittime = 10; // secund
+var waittime = 10; // sec
 var w = waittime * 1000;
 
-nanoTest.add('"return 0", "0", "==", "1"', "0", "!=", "1");
-nanoTest.add('"return 0", "0", "==", 1', "0", "!=", 1);
-nanoTest.add('"return 0", "0", "==", "0"', "0", "==", "0");
-nanoTest.add('"return 0", "0", "!==", "0"', "0", "!==", "0");
-nanoTest.add('"return 0", "0", "===", 0', "0", "===", 0);
-nanoTest.add('"return 0", "0", "<", 1', "0", "<", 1);
-nanoTest.add('"return 0", "0", ">", -1', "0", ">", -1);
+if(nanoTest.detected.interactiveConsole === 1){
+    nanoTest.interactivrConsole.printLn( nanoTest.interactivrConsole.style("Interactive console detected!", {color:"green"}));
+}
+
+nanoTest.add('"1. ", "0", "!=", "1"', "0", "!=", "1");
+nanoTest.add('"2. ", "0", "!=", 1', "0", "!=", 1);
+nanoTest.add('"3. ", "0", "==", "0"', "0", "==", "0");
+nanoTest.add('"4. ", "0", "!==", "0"', "0", "!==", "0");
+nanoTest.add('"5. ", "0", "===", 0', "0", "===", 0);
+nanoTest.add('"6. ", "0", "<", 1', "0", "<", 1);
+nanoTest.add('"7. ", "0", ">", -1', "0", ">", -1);
+nanoTest.add('"8. ", "1", "==", "1"', "0", "==", "1");
+nanoTest.add('"9. ", "0", "==", 1', "0", "==", 1);
+nanoTest.add('"10.", "0", "<", "0"', "0", "<", "0");
+nanoTest.add('"11.", "0", ">", "0"', "0", ">", "0");
+nanoTest.add('"12.", "{0:1}", "j==", {0:1}', "{0:1}", "j==", {0:1});
 nanoTest.run();

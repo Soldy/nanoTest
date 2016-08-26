@@ -16,3 +16,11 @@ var test = new functest();
 test.add ("example test", "examplefunction('123456')", "==", "93");
 
 test.run();
+
+
+
+
+### test
+
+
+npm test nano-test 
