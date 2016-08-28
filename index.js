@@ -2,6 +2,10 @@ exports.test = function () {
     this.history = [];
     this.tests = [];
     this.interactivrConsole = "";
+    this.result={
+        ok:0,
+        fail:0
+    }
     this.detected = {
         interactiveConsole: 0,
     }
@@ -17,12 +21,14 @@ exports.test = function () {
     this.printLog = function () {
         for (var i = 0; i < this.history.length; i++)
             if (this.history[i].result === "ok") {
+                this.result.ok++;
                 if (that.detected.interactiveConsole === 0) {
                     console.log(this.history[i].name + " : " + this.history[i].result + " - " + this.history[i].time + " ms");
                 } else {
                     this.interactivrConsole.printLn(this.history[i].name + " : " + this.history[i].result + " - " + this.history[i].time + " ms " + this.interactivrConsole.style("✓", {color: "green"}));
                 }
             } else {
+                this.result.fail++;
                 if (that.detected.interactiveConsole === 0) {
                     console.log(this.history[i].name + " : " + this.history[i].result + " --- value --- " + JSON.stringify(this.history[i].value) + " \n");
                 } else {
@@ -115,6 +121,8 @@ exports.test = function () {
             this.addLog(this.test(this.tests[i].name, this.tests[i].test, this.tests[i].rule, this.tests[i].sample));
         }
         this.printLog();
+        console.log("ok :"+that.result.ok.toString()+" | failed : "+that.result.fail.toString());
+
     }
     var that = this;
     this.check();
