@@ -2,9 +2,9 @@ exports.test = function () {
     this.history = [];
     this.tests = [];
     this.interactivrConsole = "";
-    this.result={
-        ok:0,
-        fail:0
+    this.result = {
+        ok: 0,
+        fail: 0
     }
     this.detected = {
         interactiveConsole: 0,
@@ -121,8 +121,11 @@ exports.test = function () {
             this.addLog(this.test(this.tests[i].name, this.tests[i].test, this.tests[i].rule, this.tests[i].sample));
         }
         this.printLog();
-        console.log("ok :"+that.result.ok.toString()+" | failed : "+that.result.fail.toString());
-
+        if (that.detected.interactiveConsole === 0) {
+            console.log("ok :" + that.result.ok.toString() + " | failed : " + that.result.fail.toString());
+        } else {
+            this.interactivrConsole.printLn("ok :" +  this.interactivrConsole.style(that.result.ok.toString(), {color: "green"})+ " | failed : " + this.interactivrConsole.style(that.result.fail.toString(), {color: "red"} ));
+        }
     }
     var that = this;
     this.check();
