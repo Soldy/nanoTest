@@ -30,9 +30,9 @@ exports.test = function () {
             } else {
                 this.result.fail++;
                 if (that.detected.interactiveConsole === 0) {
-                    console.log(this.history[i].name + " : " + this.history[i].result + " --- value --- " + JSON.stringify(this.history[i].value) + " \n");
+                    console.log(this.history[i].name + " : " + this.history[i].result + " --- value --- " + JSON.stringify(this.history[i].value) + " ms  \n");
                 } else {
-                    this.interactivrConsole.printLn(this.history[i].name + " : " + this.history[i].result + "  --- value --- " + JSON.stringify(this.history[i].value) + " " + this.interactivrConsole.style("✗", {color: "red"}));
+                    this.interactivrConsole.printLn(this.history[i].name + " : " + this.history[i].result + "  --- value --- " + JSON.stringify(this.history[i].value) + " ms " + this.interactivrConsole.style("✗", {color: "red"}));
                 }
             }
     }
@@ -91,6 +91,12 @@ exports.test = function () {
                 }
             } else if (rule == "!=") {
                 if (value != sample) {
+                    result = "ok";
+                } else {
+                    result = "faild";
+                }
+            } else if (rule == "!==") {
+                if (value !== sample) {
                     result = "ok";
                 } else {
                     result = "faild";
