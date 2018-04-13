@@ -70,56 +70,34 @@ exports.test = function () {
             result = "failed";
             error = "runtime Error";
         }
-        if (result === "ok")
+        if (result === "ok"){
+            result = "failed";
             if (rule == "==") {
-                if (value == sample) {
+                if (value == sample) 
                     result = "ok";
-                } else {
-                    result = "faild";
-                }
             } else if (rule == "j==") {
-                if (JSON.stringify(value) == JSON.stringify(sample)) {
+                if (JSON.stringify(value) == JSON.stringify(sample)) 
                     result = "ok";
-                } else {
-                    result = "faild";
-                }
             } else if (rule == "===") {
-                if (value === sample) {
+                if (value === sample)
                     result = "ok";
-                } else {
-                    result = "faild";
-                }
             } else if (rule == "!=") {
-                if (value != sample) {
+                if (value != sample)
                     result = "ok";
-                } else {
-                    result = "faild";
-                }
             } else if (rule == "!==") {
-                if (value !== sample) {
+                if (value !== sample) 
                     result = "ok";
-                } else {
-                    result = "faild";
-                }
             } else if (rule == "<") {
-                if (value < sample) {
+                if (value < sample) 
                     result = "ok";
-                } else {
-                    result = "faild";
-                }
             } else if (rule == ">") {
-                if (value > sample) {
+                if (value > sample) 
                     result = "ok";
-                } else {
-                    result = "faild";
-                }
             } else if (rule == "length") {
-                if (value.length === sample) {
+                if (value.length === sample) 
                     result = "ok";
-                } else {
-                    result = "faild";
-                }
             }
+        }
         return {time: time, name: name, result: result, error: error, value: value, sample: sample};
     }
     this.run = function () {
