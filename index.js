@@ -30,9 +30,9 @@ exports.test = function () {
             } else {
                 this.result.fail++;
                 if (that.detected.interactiveConsole === 0) {
-                    console.log(this.history[i].name + " : " + this.history[i].result + " --- value --- " + JSON.stringify(this.history[i].value) + " ms  \n");
+                    console.log(this.history[i].name + " : " + this.history[i].result + " --- value --- " + JSON.stringify(this.history[i].time) + " ms  \n");
                 } else {
-                    this.interactivrConsole.printLn(this.history[i].name + " : " + this.history[i].result + "  --- value --- " + JSON.stringify(this.history[i].value) + " ms " + this.interactivrConsole.style("✗", {color: "red"}));
+                    this.interactivrConsole.printLn(this.history[i].name + " : " + this.history[i].result + "  --- value --- " + JSON.stringify(this.history[i].time) + " ms " + this.interactivrConsole.style("✗", {color: "red"}));
                 }
             }
     }
@@ -61,16 +61,16 @@ exports.test = function () {
         var value;
         var endTime;
         try {
-            startTime = +new Date;
+            startTime = +new Date();
             eval("value = " + test);
-            endTime = +new Date;
-            time = (endTime - startTime).toString();
-            result = "ok";
+            endTime = +new Date();
+            time = (parseInt(endTime) - parseInt(startTime));
         } catch (error) {
             result = "failed";
             error = "runtime Error";
         }
-        if (result === "ok"){
+        if (result !== "failed"){
+            
             result = "failed";
             if (rule == "==") {
                 if (value == sample) 
@@ -79,7 +79,10 @@ exports.test = function () {
                 if (JSON.stringify(value) == JSON.stringify(sample)) 
                     result = "ok";
             } else if (rule == "===") {
-                if (value === sample)
+                console.log(typeof value);
+                console.log(typeof sample);
+                console.log(typeof time);
+                if ((value === sample)&&(typeof value === typeof sample))
                     result = "ok";
             } else if (rule == "!=") {
                 if (value != sample)
