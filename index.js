@@ -30,9 +30,9 @@ exports.test = function () {
             } else {
                 this.result.fail++;
                 if (that.detected.interactiveConsole === 0) {
-                    console.log(this.history[i].name + " : " + this.history[i].result + " --- value --- " + JSON.stringify(this.history[i].time) + " ms  \n");
+                    console.log(this.history[i].name + " : " + this.history[i].result + " - " + JSON.stringify(this.history[i].time) + " ms  \n");
                 } else {
-                    this.interactivrConsole.printLn(this.history[i].name + " : " + this.history[i].result + "  --- value --- " + JSON.stringify(this.history[i].time) + " ms " + this.interactivrConsole.style("✗", {color: "red"}));
+                    this.interactivrConsole.printLn(this.history[i].name + " : " + this.history[i].result + " - " + JSON.stringify(this.history[i].time) + " ms " + this.interactivrConsole.style("✗", {color: "red"}));
                 }
             }
     }
