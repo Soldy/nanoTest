@@ -79,9 +79,6 @@ exports.test = function () {
                 if (JSON.stringify(value) == JSON.stringify(sample)) 
                     result = "ok";
             } else if (rule == "===") {
-                console.log(typeof value);
-                console.log(typeof sample);
-                console.log(typeof time);
                 if ((value === sample)&&(typeof value === typeof sample))
                     result = "ok";
             } else if (rule == "!=") {
