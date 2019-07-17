@@ -2,6 +2,15 @@ exports.test = function () {
     this.history = [];
     this.tests = [];
     this.interactivrConsole = "";
+    this.processLine = "";
+    this.processIcon = [
+        "|",
+        "/",
+        "-",
+        "\\"
+    ];
+    this.processIconI=0;
+    this.processTimeout = "";
     this.result = {
         ok: 0,
         fail: 0
@@ -9,13 +18,22 @@ exports.test = function () {
     this.detected = {
         interactiveConsole: 0,
     }
+    this.processing = function (){
+        process.stdout.clearLine();
+        process.stdout.cursorTo(0);
+        process.stdout.write(thast.processLine+" "+thast.processIcon[thast.processIconI]);
+        thast.processIconI++;
+        if(thast.processIconI >3)
+            thast.processIconI=0;
+        thast.processTimeout = setTimeout(thast.processing, 100);
+    }
     this.check = function () {
         try {
             var ic = require("interactive-console");
             this.interactivrConsole = new ic.console();
-            that.detected.interactiveConsole = 1;
+            thast.detected.interactiveConsole = 1;
         } catch (e) {
-            that.detected.interactiveConsole = 0;
+            thast.detected.interactiveConsole = 0;
         }
     }
     this.printLog = function () {
@@ -25,7 +43,7 @@ exports.test = function () {
         for (var i = 0; i < this.history.length; i++)
             if (this.history[i].result === "ok") {
                 this.result.ok++;
-                if (that.detected.interactiveConsole === 0) {
+                if (thast.detected.interactiveConsole === 0) {
                     console.log(
                         this.history[i].name +
                         " : " +
@@ -50,7 +68,7 @@ exports.test = function () {
                 }
             } else {
                 this.result.fail++;
-                if (that.detected.interactiveConsole === 0) {
+                if (thast.detected.interactiveConsole === 0) {
                     console.log(
                         this.history[i].name + 
                         " : " + 
@@ -228,7 +246,9 @@ exports.test = function () {
             debug: debug
        };
     }
+    process.stderr.write('\x1B[?25l');
     this.run = async function () {
+        process.stderr.write('\x1B[?25l');
         for (var i = 0; i < this.tests.length; i++) {
             this.addLog(
                 await this.test(
@@ -240,24 +260,26 @@ exports.test = function () {
              );
         }
         this.printLog();
-        if (that.detected.interactiveConsole === 0) {
-            console.log("ok :" + that.result.ok.toString() + " | failed : " + that.result.fail.toString());
+        if (thast.detected.interactiveConsole === 0) {
+            console.log("ok :" + thast.result.ok.toString() + " | failed : " + that.result.fail.toString());
         } else {
             this.interactivrConsole.printLn(
                 "ok :" +  
                 this.interactivrConsole.style(
-                    that.result.ok.toString(), {
+                    thast.result.ok.toString(), {
                          color: "green"
                     })+ " | failed : " + 
-                    this.interactivrConsole.style(that.result.fail.toString(), 
+                    this.interactivrConsole.style(thast.result.fail.toString(), 
                          {color: "red"} 
                     )
              );
        
        }
+       process.stderr.write('\x1B[?25h');
     }
-    var that = this;
+    var thast = this;
     this.check();
+    thast.processing();
 }
 
 
