@@ -1,5 +1,5 @@
 {
-  "name": "nano-test",
+  "name": "nanoTest",
   "version": "0.0.4-alpha",
   "description": "nano size unit test toolkit.",
   "main": "index.js",
