@@ -1,3 +1,5 @@
+const iconsole = require("interactiveConsole");
+
 exports.test = function () {
     this.history = [];
     this.tests = [];
@@ -14,35 +16,54 @@ exports.test = function () {
     this.result = {
         ok: 0,
         fail: 0
-    }
+    };
     this.detected = {
         interactiveConsole: 0,
-    }
+    };
     this.processing = function (){
-        process.stdout.clearLine();
-        process.stdout.cursorTo(0);
-        process.stdout.write(thast.processLine+" "+thast.processIcon[thast.processIconI]);
-        thast.processIconI++;
-        if(thast.processIconI >3)
-            thast.processIconI=0;
-        thast.processTimeout = setTimeout(thast.processing, 100);
-    }
+        let progress = thast.tests.length-thast.result.ok-thast.result.fail;
+        if (thast.detected.interactiveConsole === 0) {
+            process.stdout.clearLine();
+            process.stdout.cursorTo(0);
+            process.stdout.write(thast.processLine+" "+thast.processIcon[thast.processIconI]);
+            thast.processIconI++;
+            if(thast.processIconI >3)
+                thast.processIconI=0;
+        }else{
+            thast.interactivrConsole.bar.update({
+                "name"   : "progress",
+                "update" : {
+                    "1" : progress,
+                    "2" : thast.result.ok,
+                    "3" : thast.result.fail
+                }});
+            thast.interactivrConsole.cursor.up(3);
+            thast.interactivrConsole.bar.draw("progress");
+        }
+        if(thast.processTimeout !== ""){
+            clearTimeout(thast.processTimeout);
+            thast.processTimeout="";
+        }
+        if(
+            (thast.result.ok+thast.result.fail === 0)||
+            (parseInt(progress) !== 0)
+        )
+            thast.processTimeout = setTimeout(thast.processing, 20);
+    };
     this.check = function () {
         try {
-            var ic = require("interactive-console");
-            this.interactivrConsole = new ic.console();
+            thast.interactivrConsole = new iconsole.console();
             thast.detected.interactiveConsole = 1;
         } catch (e) {
             thast.detected.interactiveConsole = 0;
         }
-    }
+    };
     this.printLog = function () {
-        for (var i = 0; i < this.history.length; i++)
+        for (let i = 0; i < this.history.length; i++)
             if(typeof this.history[i].debug !== "undefined")
-               console.log(this.history[i]);
-        for (var i = 0; i < this.history.length; i++)
+                console.log(this.history[i]);
+        for (let i = 0; i < this.history.length; i++)
             if (this.history[i].result === "ok") {
-                this.result.ok++;
                 if (thast.detected.interactiveConsole === 0) {
                     console.log(
                         this.history[i].name +
@@ -67,7 +88,6 @@ exports.test = function () {
 
                 }
             } else {
-                this.result.fail++;
                 if (thast.detected.interactiveConsole === 0) {
                     console.log(
                         this.history[i].name + 
@@ -83,7 +103,7 @@ exports.test = function () {
                         this.interactivrConsole.style(
                             "✗ ", 
                             {color: "red"}
-                         )+
+                        )+
                         this.history[i].name +
                         " : " +
                         this.history[i].result +
@@ -92,7 +112,7 @@ exports.test = function () {
                     );
                 }
             }
-    }
+    };
     this.addLog = function (input) {
         this.history.push({
             time: input.time,
@@ -103,7 +123,7 @@ exports.test = function () {
             debug: input.debug
 
         });
-    }
+    };
     this.add = function (name, test, rule, sample) {
         this.tests.push({
             name: name,
@@ -111,59 +131,59 @@ exports.test = function () {
             rule: rule,
             sample: sample,
         });
-    }
+    };
     this.test = async function (name, test, rule, sample) {
-        var result;
-        var error = "none";
-        var time = 0;
-        var startTime;
-        var value;
-        var endTime;
-        var debug;
+        let result;
+        let error = "none";
+        let time = 0;
+        let startTime;
+        let value;
+        let endTime;
+        let debug;
         try {
             if(typeof test === "string"){
-                startTime = +new Date;
+                startTime = (+new Date());
                 eval("value = " + test);
-                endTime = +new Date;
+                endTime = (+new Date());
             }else if(typeof test === "object"){
                 if(
                     (typeof test.options === "undefined")||
                     (test.options.length === 0)){
-                    startTime = +new Date;
+                    startTime = (+new Date());
                     value = await test.function();
-                    endTime = +new Date;
+                    endTime = (+new Date());
                 }else if(test.options.length === 1){
-                    startTime = +new Date;
+                    startTime = (+new Date());
                     value = await test.function(
                         test.options[0]
                     );
-                    endTime = +new Date;
+                    endTime = (+new Date());
                 }else if(test.options.length === 2){
-                    startTime = +new Date;
+                    startTime = (+new Date());
                     value = await test.function(
                         test.options[0],
                         test.options[1]
                     );
-                    endTime = +new Date;
+                    endTime = (+new Date());
                 }else if(test.options.length === 3){
-                    startTime = +new Date;
+                    startTime = (+new Date());
                     value = await test.function(
                         test.options[0],
                         test.options[1],
                         test.options[2]
                     );
-                    endTime = +new Date;
+                    endTime = (+new Date());
                 }else if(test.options.length === 4){
-                    startTime = +new Date;
+                    startTime = (+new Date());
                     value = await test.function(
                         test.options[0],
                         test.options[1],
                         test.options[2],
                         test.options[3]
                     );
-                    endTime = +new Date;
+                    endTime = (+new Date());
                 }else if(test.options.length === 5){
-                    startTime = +new Date;
+                    startTime = (+new Date());
                     value = await test.function(
                         test.options[0],
                         test.options[1],
@@ -171,12 +191,12 @@ exports.test = function () {
                         test.options[3],
                         test.options[4]
                     );
-                    endTime = +new Date;
+                    endTime = (+new Date());
                 }
             }else{
-                startTime = +new Date;
+                startTime = (+new Date());
                 value = await test();
-                endTime = +new Date;
+                endTime = (+new Date());
             }
             time = (endTime - startTime).toString();
             result = "ok";
@@ -236,6 +256,10 @@ exports.test = function () {
                     result = "faild";
                 }
             }
+        if (result == "faild")
+            this.result.fail++;
+        else
+            this.result.ok++;
         return {
             time: time, 
             name: name, 
@@ -244,11 +268,36 @@ exports.test = function () {
             value: value, 
             sample: sample,
             debug: debug
-       };
-    }
-    process.stderr.write('\x1B[?25l');
+        };
+    };
+    process.stderr.write("\x1B[?25l");
     this.run = async function () {
-        process.stderr.write('\x1B[?25l');
+        process.stderr.write("\x1B[?25l");
+        if (thast.detected.interactiveConsole === 1) {
+            thast.interactivrConsole.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+            thast.interactivrConsole.bar.init({
+                "name":"progress",
+                "max" : thast.tests.length
+            });
+            thast.interactivrConsole.bar.addLine({
+                "bar"   : "progress",
+                "id"    : "1",
+                "title"  : "not tested",
+                "color" : "blue"
+            });
+            thast.interactivrConsole.bar.addLine({
+                "bar"   : "progress",
+                "id"    : "2",
+                "title"  : "ok",
+                "color" : "green"
+            });
+            thast.interactivrConsole.bar.addLine({
+                "bar"   : "progress",
+                "id"    : "3",
+                "title"  : "failed",
+                "color" : "red"
+            });
+        }
         for (var i = 0; i < this.tests.length; i++) {
             this.addLog(
                 await this.test(
@@ -257,29 +306,30 @@ exports.test = function () {
                     this.tests[i].rule, 
                     this.tests[i].sample
                 )
-             );
+            );
         }
-        this.printLog();
+        thast.processing();
+        thast.printLog();
         if (thast.detected.interactiveConsole === 0) {
-            console.log("ok :" + thast.result.ok.toString() + " | failed : " + that.result.fail.toString());
+            console.log("ok :" + thast.result.ok.toString() + " | failed : " + thast.result.fail.toString());
         } else {
             this.interactivrConsole.printLn(
                 "ok :" +  
                 this.interactivrConsole.style(
                     thast.result.ok.toString(), {
-                         color: "green"
+                        color: "green"
                     })+ " | failed : " + 
                     this.interactivrConsole.style(thast.result.fail.toString(), 
-                         {color: "red"} 
+                        {color: "red"} 
                     )
-             );
+            );
        
-       }
-       process.stderr.write('\x1B[?25h');
-    }
+        }
+        process.stderr.write("\x1B[?25h");
+    };
     var thast = this;
     this.check();
     thast.processing();
-}
+};
 
 
