@@ -23,6 +23,6 @@ nanoTestFull=()=>{
     nanoTest.add('"12.", (()=>{return "{0:1}"})(), "j==", {0:1}', '(()=>{return "{0:1}"})()', "j==", {0:1});
     nanoTest.add('"13.", (()=>{return {0:1}})(), "j==", {0:1}', '(()=>{return {0:1}})()', "j==", {0:1});
     nanoTest.add('"14.", (()=>{return {0:1}})(), "==", {0:1}', '(()=>{return {0:1}})()', "==", {0:1});
-    nanoTest.run();   
-}
+    nanoTest.run();
+};
 nanoTestFull();
