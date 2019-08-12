@@ -1,0 +1,36 @@
+{
+  "name": "nano-test",
+  "version": "0.0.4-alpha",
+  "description": "nano size unit test toolkit.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Soldy/nanoTest"
+  },
+  "dependencies": {
+    "interactiveConsole": "^0.0.7-alpha0"
+  },
+  "keywords": [
+    "unit",
+    "test",
+    "test",
+    "simple",
+    "unit",
+    "test",
+    "ultra",
+    "fast",
+    "unit",
+    "test",
+    "unittest",
+    "nanotest",
+    "simpletest"
+  ],
+  "author": "Soldy <npmjs@gidigi.com> (http://gidigi.com)",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/Soldy/nanoTest/issues"
+  }
+}
