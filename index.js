@@ -15,7 +15,9 @@ exports.test = function () {
     this.processTimeout = "";
     this.result = {
         ok: 0,
-        fail: 0
+        fail: 0,
+        error: 0,
+        missing: 0
     };
     this.detected = {
         interactiveConsole: 0,
@@ -201,8 +203,12 @@ exports.test = function () {
             time = (endTime - startTime).toString();
             result = "ok";
         } catch (e) {
-            result = "failed";
-            error = "runtime Error";
+            result = "faild";
+            if(typeof test !== "undefined"){
+                error = "runtime Error";
+            }else{
+                error = "missing";
+            }
             debug = e;
         }
         
@@ -256,9 +262,13 @@ exports.test = function () {
                     result = "faild";
                 }
             }
-        if (result == "faild")
+        if (result == "faild"){
             this.result.fail++;
-        else
+            if(error !== "none")
+                this.result.error++
+            if(error == "missing")
+                this.result.missing++
+        }else
             this.result.ok++;
         return {
             time: time, 
@@ -316,12 +326,21 @@ exports.test = function () {
             this.interactivrConsole.printLn(
                 "ok :" +  
                 this.interactivrConsole.style(
-                    thast.result.ok.toString(), {
-                        color: "green"
-                    })+ " | failed : " + 
-                    this.interactivrConsole.style(thast.result.fail.toString(), 
-                        {color: "red"} 
-                    )
+                    thast.result.ok.toString(), 
+                    {color: "green"}
+                )+ " | failed : " + 
+                this.interactivrConsole.style(
+                     thast.result.fail.toString(),
+                     {color: "red"} 
+                )+ " | error : " + 
+                this.interactivrConsole.style(
+                     thast.result.error.toString(), 
+                      {color: "yellow"} 
+                )+ " | missing : " + 
+                this.interactivrConsole.style(
+                     thast.result.missing.toString(), 
+                     {color: "blue"} 
+               )
             );
        
         }
