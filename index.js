@@ -203,7 +203,7 @@ exports.test = function () {
             time = (endTime - startTime).toString();
             result = "ok";
         } catch (e) {
-            result = "faild";
+            result = "error";
             if(typeof test !== "undefined"){
                 error = "runtime Error";
             }else{
@@ -217,52 +217,52 @@ exports.test = function () {
                 if (value == sample) {
                     result = "ok";
                 } else {
-                    result = "faild";
+                    result = "failed";
                 }
             } else if (rule == "j==") {
                 if (JSON.stringify(value) == JSON.stringify(sample)) {
                     result = "ok";
                 } else {
-                    result = "faild";
+                    result = "failed";
                 }
             } else if (rule == "===") {
                 if (value === sample) {
                     result = "ok";
                 } else {
-                    result = "faild";
+                    result = "failed";
                 }
             } else if (rule == "!=") {
                 if (value != sample) {
                     result = "ok";
                 } else {
-                    result = "faild";
+                    result = "failed";
                 }
             } else if (rule == "!==") {
                 if (value !== sample) {
                     result = "ok";
                 } else {
-                    result = "faild";
+                    result = "failed";
                 }
             } else if (rule == "<") {
                 if (value < sample) {
                     result = "ok";
                 } else {
-                    result = "faild";
+                    result = "failed";
                 }
             } else if (rule == ">") {
                 if (value > sample) {
                     result = "ok";
                 } else {
-                    result = "faild";
+                    result = "failed";
                 }
             } else if (rule == "length") {
                 if (value.length === sample) {
                     result = "ok";
                 } else {
-                    result = "faild";
+                    result = "failed";
                 }
             }
-        if (result == "faild"){
+        if (result !== "ok"){
             this.result.fail++;
             if(error !== "none")
                 this.result.error++
