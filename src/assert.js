@@ -168,11 +168,15 @@ const assertManager = function (){
         ">"             : greater,
         "greater"       : greater,
         "more"          : greater,
+        "higher"        : greater,
         "bigger"        : greater,
         "biger"         : greater,
+        "larger"        : greater,
         "<"             : less,
         "less"          : less,
         "lower"         : less,
+        "smaller"       : less,
+        "smaler"        : less,
         "length"        : length
 
     }
