@@ -1,4 +1,11 @@
 
+.editorconfig
+.gitattributes
+.jshintrc
+demo/
+.travis.yml
+.eslintrc.json
+nanotest.sh
 logs
 *.log
 *.swp
