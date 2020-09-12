@@ -2,130 +2,137 @@
 
 const assertManager = function (){
     /*
-     * @param any {result}
+     * @param any {value}
      * @param string {rule}
      * @param any {sample}
      * @public
      * boolean
      */
-    this.check = function(result, rule, sample){
-        if(typeof result === "undefined")
-            errorAdd(' result not defined ');
+    this.check = function(value, rule, sample){
+        errorClean();
+        if(typeof value === "undefined")
+            errorAdd(' value not defined ');
         if(typeof rule === "undefined")
             errorAdd(' rule not defined ');
         if(typeof sample === "undefined")
             errorAdd(' sample not defined ');
-        if(errorCheck())
+        if(errorCheck()){
             return false;
+        }
         if(typeof collection[rule.toLowerCase()] === "undefined")
             errorAdd(' Rule not exist ');
         if(errorCheck())
             return false;
-        return collection[rule.toLowerCase()](result, sample);
+        return collection[rule.toLowerCase()](value, sample);
     }
     /*
-     * @param any {result}
+     * @param any {value}
      * @param any {sample}
      * @private
      * boolean
      */
-    let equal = function(result,sample){
-        if( result == sample )
+    let equal = function(value,sample){
+        if( value == sample )
             return true;
         return false;
     }
     /*
-     * @param any {result}
+     * @param any {value}
      * @param any {sample}
      * @private
      * boolean
      */
-    let equalType = function(result,sample){
-        if( result === sample )
+    let equalType = function(value,sample){
+        if( value === sample )
             return true;
         return false;
     }
     /*
-     * @param object {result}
+     * @param object {value}
      * @param object {sample}
      * @private
      * boolean
      */
-    let equalJson = function(result,sample){
-        if( JSON.stringify(result) === JSON.stringify(sample) )
+    let equalJson = function(value,sample){
+        if( JSON.stringify(value) === JSON.stringify(sample) )
             return true;
         return false;
     }
     /*
-     * @param any {result}
+     * @param any {value}
      * @param any {sample}
      * @private
      * boolean
      */
-    let notEqual = function(result,sample){
-        if( result != sample )
+    let notEqual = function(value,sample){
+        if( value != sample )
             return true;
         return false;
     }
     /*
-     * @param any {result}
+     * @param any {value}
      * @param any {sample}
      * @private
      * boolean
      */
-    let notEqualType = function(result,sample){
-        if( result !== sample )
+    let notEqualType = function(value,sample){
+        if( value !== sample )
             return true;
         return false;
     }
     /*
-     * @param number {result}
+     * @param number {value}
      * @param number {sample}
      * @private
      * boolean
      */
-    let greater = function(result,sample){
-        if( typeof result !== "number" )
-            errorAdd(" Result not a number \n");
+    let greater = function(value,sample){
+        if( typeof value !== "number" )
+            errorAdd(" value not a number \n");
         if (typeof sample !== "number" )
             errorAdd(" Sample not a number \n");
         if(errorCheck())
             return false;
-        if( result < sample )
+        if( value > sample )
             return true;
         return false;
     }
     /*
-     * @param number {result}
+     * @param number {value}
      * @param number {sample}
      * @private
      * boolean
      */
-    let less = function(result,sample){
-        if( typeof result !== "number" )
-            errorAdd(" Result not a number \n");
+    let less = function(value,sample){
+        if( typeof value !== "number" )
+            errorAdd(" value not a number \n");
         if (typeof sample !== "number" )
             errorAdd(" Sample not a number \n");
         if(errorCheck())
             return false;
-        if( result > sample )
+        if( value < sample )
             return true;
         return false;
     }
     /*
-     * @param string {result}
+     * @param string {value}
      * @param string {sample}
      * @private
      * boolean
      */
-    let length = function(result,sample){
-        if( typeof result !== "string" )
-            errorAdd(" Result not a string \n");
-        if( typeof sample !== "number" )
-            errorAdd(" sample not a number ");
+    let length = function(value,sample){
+        if(
+            (typeof value !== "string" )||
+            (typeof sample !== "number" )
+        ){
+            if(typeof value !== "string" )
+                errorAdd(" value not a string \n");
+             if(typeof sample !== "number" )
+                 errorAdd(" sample not a number ");
+        }
         if(errorCheck())
             return false;
-        if( result.length > sample )
+        if( value.length === sample )
             return true;
         return false;
     }
@@ -210,3 +217,6 @@ const assertManager = function (){
         errors = [];
     }
 }
+exports.assertManager = assertManager;
+
+

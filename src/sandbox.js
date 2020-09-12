@@ -1,19 +1,19 @@
+'use strict'
 
-
-const sandbox = function(){
+const sandboxClass = function(testIn){
     /*
      * @public
      * object
      */
-    this.check = function(test){
-        run();
+    this.check = async function(){
+        await run();
         return {
             time,
-            starTime,
+            startTime,
             endTime,
-            name,
             result,
-            errors,
+            value,
+            error,
             complete 
         }
     }
@@ -21,12 +21,22 @@ const sandbox = function(){
      * @private
      * any
      */
-    let result;
+    let test = testIn;
     /*
      * @private
-     * array
+     * object 
      */
-    let errors = [];
+    let error = false;
+    /*
+     * @private
+     * object 
+     */
+    let value = false;
+    /*
+     * @private
+     * object 
+     */
+    let result = 0;
     /*
      * @private
      * unixmicrotimestamp
@@ -52,10 +62,10 @@ const sandbox = function(){
      * @private
      * boolean
      *
-     */.
-    let runString = function(test){
+     */
+    let runString = function(){
         startTime = (+new Date());
-        eval("value = " + test);
+        eval("result = " + test.test);
         endTime = (+new Date());
     }
     /*
@@ -64,17 +74,17 @@ const sandbox = function(){
      * boolean
      *
      */
-    let runObject = function (test){
+    let runObject = async function (){
         if(
-            (typeof test.options === "undefined")||
-            (1 > test.options.length)
+            (typeof test.test.options === "undefined")||
+            (1 > test.test.options.length)
         ){
             startTime = (+new Date());
-            value = await test.function();
+            value = await test.test['function']();
             endTime = (+new Date());
         }else{
             startTime = (+new Date());
-            value = await test.function(...test.options);
+            value = await test.test['function'](...test.test.options);
             endTime = (+new Date());
         }
     }
@@ -84,9 +94,9 @@ const sandbox = function(){
      * boolean
      *
      */
-    let runLegacy = function(test){
+    let runLegacy = async function(){
         startTime = (+new Date());
-        value = await test();
+        value = await test.test();
         endTime = (+new Date());
     }
     /*
@@ -95,20 +105,31 @@ const sandbox = function(){
      * boolean
      *
      */
-    let run = function(test){
+    let run = async function(){
         try { 
-            if(typeof test === "string"){
-                runString(test);
-            }else if(typeof test === "object"){
-                runObject(test);
+            if(typeof test.test === 'undefined'){
+                result = 4;
+            }else if(typeof test.test === "string"){
+                await runString();
+            }else if(typeof test.test === "object"){
+                if(typeof test.test['function'] === 'undefined'){
+                    result = 4;
+                } else 
+                    await runObject();
             }else{
-                runLegacy(test);
+                await runLegacy();
             }
-            complate = true;
+            complete = true;
         }catch(e){
-           errorAdd(e);
+           result = 3;
+           error = e;
         }
+        if (endTime === 0)
+            endTime = (+new Date());
         time = (endTime - startTime).toString();
         return true;
     }
 }
+
+
+exports.sandboxClass = sandboxClass;
