@@ -13,10 +13,11 @@ const screenClass = function(sizeIn){
     this.change = function(resultIn,testIn){
         result = resultIn;
         processing();
-        if(typeof testIn !== 'undefined')
+        if(typeof testIn !== 'undefined'){
             tests.push(testIn);
-        if(testIn.error !== false)
-            debugs.push(testIn.error);
+            if(testIn.error !== false)
+                debugs.push(testIn.error);
+        }
     };
     /*
      * @public
@@ -39,7 +40,11 @@ const screenClass = function(sizeIn){
             }
 
         ic.printLn(
-            'ok :' +  
+            'all : ' +  
+            ic.style(
+                result.all.toString(), 
+                {color: 'gray'}
+            )+ ' | ok : ' +  
             ic.style(
                 result.ok.toString(), 
                 {color: 'green'}
@@ -59,6 +64,7 @@ const screenClass = function(sizeIn){
                 }
             )
         );
+        ic.printLn('test time : '+result.time+'ms');
         process.stderr.write('\x1B[?25h');
     };
     /*
@@ -195,6 +201,7 @@ const screenClass = function(sizeIn){
      * object
      */
     let result = {
+        all: 0,
         ok: 0,
         fail: 0,
         error: 0,

@@ -39,6 +39,7 @@ const masterClass = function(){
         return id;
     };
     this.run = async function(){
+        startTime = (+new Date);
         for (let t in tests){
             let test = await sandboxes[t].check();
             tests[t].startTime = test.startTime;
@@ -63,6 +64,9 @@ const masterClass = function(){
             count();
             screen.change(result, tests[t]);
         }
+        endTime = (+new Date);
+        count();
+        screen.change(result);
         end();
 
     };
@@ -80,6 +84,8 @@ const masterClass = function(){
         error: 0,
         missing: 0
     };
+    let startTime = 0;
+    let endTime = 0;
     let size = 0;
     let serial = 0;
     let tests = {};
@@ -87,17 +93,20 @@ const masterClass = function(){
     let count = function(){
         let newSize = 0;
         let newResult = {
+            time:(+new Date)-startTime,
+            all:0,
             ok: 0,
             fail: 0,
             error: 0,
             missing: 0
         };
         for (let i in tests){
-            newSize = 0;
+            newSize++;
             if(tests[i].ready === true)
                 newResult[resultType[tests[i].result]]++;
         }
         size = newSize;
+        newResult.all = size;
         result = newResult;
         return size;
     };
