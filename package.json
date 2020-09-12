@@ -1,6 +1,6 @@
 {
   "name": "nanoTest",
-  "version": "0.9.9-alpha",
+  "version": "0.9.9-alpha-1",
   "description": "nano size unit test toolkit.",
   "main": "index.js",
   "scripts": {
@@ -11,9 +11,10 @@
     "url": "https://github.com/Soldy/nanoTest"
   },
   "dependencies": {
-    "eslint": "^7.9.0",
-    "interactiveConsole": "^0.0.7-alpha0",
-    "jslint": "^0.12.1"
+    "interactiveConsole": "^0.0.7-alpha0"
+  },
+  "devDependencies": {
+    "eslint": "^7.9.0"
   },
   "keywords": [
     "unit",
