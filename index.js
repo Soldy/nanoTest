@@ -1,1 +1,1 @@
-exports.test = (require("./src/master.js")).masterClass;
+exports.test = (require('./src/master.js')).masterClass;

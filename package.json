@@ -11,7 +11,9 @@
     "url": "https://github.com/Soldy/nanoTest"
   },
   "dependencies": {
-    "interactiveConsole": "^0.0.7-alpha0"
+    "eslint": "^7.9.0",
+    "interactiveConsole": "^0.0.7-alpha0",
+    "jslint": "^0.12.1"
   },
   "keywords": [
     "unit",

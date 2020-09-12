@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const sandboxClass = function(testIn){
     /*
@@ -15,8 +15,8 @@ const sandboxClass = function(testIn){
             value,
             error,
             complete 
-        }
-    }
+        };
+    };
     /*
      * @private
      * any
@@ -65,9 +65,9 @@ const sandboxClass = function(testIn){
      */
     let runString = function(){
         startTime = (+new Date());
-        eval("result = " + test.test);
+        eval('result = ' + test.test);
         endTime = (+new Date());
-    }
+    };
     /*
      * @param object {test}
      * @private
@@ -76,7 +76,7 @@ const sandboxClass = function(testIn){
      */
     let runObject = async function (){
         if(
-            (typeof test.test.options === "undefined")||
+            (typeof test.test.options === 'undefined')||
             (1 > test.test.options.length)
         ){
             startTime = (+new Date());
@@ -87,7 +87,7 @@ const sandboxClass = function(testIn){
             value = await test.test['function'](...test.test.options);
             endTime = (+new Date());
         }
-    }
+    };
     /*
      * @param function {test}
      * @private
@@ -98,7 +98,7 @@ const sandboxClass = function(testIn){
         startTime = (+new Date());
         value = await test.test();
         endTime = (+new Date());
-    }
+    };
     /*
      * @param any {test}
      * @private
@@ -109,9 +109,9 @@ const sandboxClass = function(testIn){
         try { 
             if(typeof test.test === 'undefined'){
                 result = 4;
-            }else if(typeof test.test === "string"){
+            }else if(typeof test.test === 'string'){
                 await runString();
-            }else if(typeof test.test === "object"){
+            }else if(typeof test.test === 'object'){
                 if(typeof test.test['function'] === 'undefined'){
                     result = 4;
                 } else 
@@ -121,15 +121,15 @@ const sandboxClass = function(testIn){
             }
             complete = true;
         }catch(e){
-           result = 3;
-           error = e;
+            result = 3;
+            error = e;
         }
         if (endTime === 0)
             endTime = (+new Date());
         time = (endTime - startTime).toString();
         return true;
-    }
-}
+    };
+};
 
 
 exports.sandboxClass = sandboxClass;

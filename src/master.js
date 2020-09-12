@@ -1,5 +1,5 @@
 
-'use strict'
+'use strict';
 const screen = new (require('../src/screen.js')).screenClass(10);
 const sandboxClass = require('./sandbox.js').sandboxClass;
 const assertManager = new (require('../src/assert.js')).assertManager();
@@ -32,12 +32,12 @@ const masterClass = function(){
             'check'    : false,
             'debug'    : ''
 
-        }
+        };
         sandboxes[id] = new sandboxClass(
             tests[id]
         );
         return id;
-    }
+    };
     this.run = async function(){
         for (let t in tests){
             let test = await sandboxes[t].check();
@@ -49,9 +49,9 @@ const masterClass = function(){
             tests[t].value     = test.value;
             tests[t].error     = test.error;
             tests[t].check     = assertManager.check(
-                        tests[t].value, 
-                        tests[t].rule,
-                        tests[t].sample
+                tests[t].value, 
+                tests[t].rule,
+                tests[t].sample
             );
             if(tests[t].result === 0){
                 if( tests[t].check === true ){
@@ -65,21 +65,21 @@ const masterClass = function(){
         }
         end();
 
-    }
+    };
 
     let resultType = [
-      'not tested',
-      'ok',
-      'fail',
-      'error',
-      'missing'
+        'not tested',
+        'ok',
+        'fail',
+        'error',
+        'missing'
     ];
     let result = {
         ok: 0,
         fail: 0,
         error: 0,
         missing: 0
-    }
+    };
     let size = 0;
     let serial = 0;
     let tests = {};
@@ -91,7 +91,7 @@ const masterClass = function(){
             fail: 0,
             error: 0,
             missing: 0
-        }
+        };
         for (let i in tests){
             newSize = 0;
             if(tests[i].ready === true)
@@ -100,13 +100,13 @@ const masterClass = function(){
         size = newSize;
         result = newResult;
         return size;
-    }
+    };
     let end = function(){
         //for (let t in tests)
         //    screen.print(tests[t]);
         screen.end();
-    }
-}
+    };
+};
 
 
 exports.masterClass = masterClass;
