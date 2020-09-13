@@ -41,7 +41,7 @@ const masterClass = function(settings){
     };
     this.setup = function(){
         return setup();
-    }
+    };
     this.run = async function(){
         startTime = (+new Date);
         count();
@@ -100,6 +100,8 @@ const masterClass = function(settings){
     let count = function(){
         let newSize = 0;
         let newResult = {
+            start:startTime,
+            end:endTime,
             time:(+new Date)-startTime,
             all:0,
             ok: 0,

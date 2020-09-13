@@ -157,51 +157,51 @@ const screenClass = function(resultIn, setupIn){
                 {
                     color: 'yellow'
                 }
-            )+" : "+
+            )+' : '+
             first[1]
         );
-        let tree = "┣━ ";
+        let tree = '┣━ ';
         if (setup.get('debugPrint') === 'short'){
             let pieces = lines[1].split(':');
-            tree = "┗━ ";
+            tree = '┗━ ';
             ic.printLn(
                 pieces[0]
-                    .replace("   at ", tree)
-                    .replace(process.cwd()+"/", " ")+" | "+
+                    .replace('   at ', tree)
+                    .replace(process.cwd()+'/', ' ')+' | '+
                 ic.style(
                     parseInt(pieces[1]).toString(),
                     {
                         color : 'cyan'
                     }
-                )+":"+
+                )+':'+
                 ic.style(
                     parseInt(pieces[2]).toString(),
                     {
                         color : 'cyan'
                     }
-                )+" )"
+                )+' )'
             );
         }else 
             for(let i = 1; lines.length > i ; i++){
                 let pieces = lines[i].split(':');
                 if(i === lines.length-1)
-                     tree = "┗━ ";
+                    tree = '┗━ ';
                 ic.printLn(
                     pieces[0]
-                        .replace("   at ", tree)
-                        .replace(process.cwd()+"/", " ")+" | "+
+                        .replace('   at ', tree)
+                        .replace(process.cwd()+'/', ' ')+' | '+
                     ic.style(
                         parseInt(pieces[1]).toString(),
                         {
                             color : 'cyan'
                         }
-                    )+":"+
+                    )+':'+
                     ic.style(
                         parseInt(pieces[2]).toString(),
                         {
                             color : 'cyan'
                         }
-                    )+" )"
+                    )+' )'
                 );
             }
     };
