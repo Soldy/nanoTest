@@ -160,10 +160,15 @@ const screenClass = function(sizeIn){
             )+" : "+
             first[1]
         );
+        let tree = "┣━ ";
         for(let i = 1; lines.length > i ; i++){
             let pieces = lines[i].split(':');
+            if(i === lines.length-1)
+                 tree = "┗━ ";
             ic.printLn(
-                pieces[0]+" | "+
+                pieces[0]
+                    .replace("   at ", tree)
+                    .replace(process.cwd()+"/", " ")+" | "+
                 ic.style(
                     parseInt(pieces[1]).toString(),
                     {
