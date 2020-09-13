@@ -2,7 +2,7 @@
 const ic = new (require('interactiveConsole')).console();
 
 
-const screenClass = function(sizeIn){
+const screenClass = function(resultIn, setupIn){
     /*
      * @param object {resultIn}
      * @param object {testrIn} Last test object
@@ -161,10 +161,9 @@ const screenClass = function(sizeIn){
             first[1]
         );
         let tree = "┣━ ";
-        for(let i = 1; lines.length > i ; i++){
-            let pieces = lines[i].split(':');
-            if(i === lines.length-1)
-                 tree = "┗━ ";
+        if (setup.get('debugPrint') === 'short'){
+            let pieces = lines[1].split(':');
+            tree = "┗━ ";
             ic.printLn(
                 pieces[0]
                     .replace("   at ", tree)
@@ -182,7 +181,29 @@ const screenClass = function(sizeIn){
                     }
                 )+" )"
             );
-        }
+        }else 
+            for(let i = 1; lines.length > i ; i++){
+                let pieces = lines[i].split(':');
+                if(i === lines.length-1)
+                     tree = "┗━ ";
+                ic.printLn(
+                    pieces[0]
+                        .replace("   at ", tree)
+                        .replace(process.cwd()+"/", " ")+" | "+
+                    ic.style(
+                        parseInt(pieces[1]).toString(),
+                        {
+                            color : 'cyan'
+                        }
+                    )+":"+
+                    ic.style(
+                        parseInt(pieces[2]).toString(),
+                        {
+                            color : 'cyan'
+                        }
+                    )+" )"
+                );
+            }
     };
 
     /*
@@ -190,10 +211,10 @@ const screenClass = function(sizeIn){
      */
     let init = function(){
         process.stderr.write('\x1B[?25l');
-        ic.printLn('\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
+        ic.printLn('\n\n\n');
         ic.bar.init({
             'name':'progress',
-            'max' : size
+            'max' : result.all 
         });
         ic.bar.addLine({
             'bar'         : 'progress',
@@ -227,11 +248,6 @@ const screenClass = function(sizeIn){
     let timeout = '';
     /*
      * @private
-     * integer
-     */
-    let size = sizeIn;
-    /*
-     * @private
      * object
      */
     let result = {
@@ -241,6 +257,9 @@ const screenClass = function(sizeIn){
         error: 0,
         missing: 0
     };
+    let setup = setupIn;
+    if(resultIn !== ' undefined')
+        result = resultIn;
     init();
 };
 

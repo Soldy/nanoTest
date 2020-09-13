@@ -1,10 +1,11 @@
 
 'use strict';
-const screen = new (require('../src/screen.js')).screenClass(10);
+const setupBase = (require('./setup.js')).setupClass;
+const screenBase = (require('./screen.js')).screenClass;
 const sandboxClass = require('./sandbox.js').sandboxClass;
 const assertManager = new (require('../src/assert.js')).assertManager();
 
-const masterClass = function(){
+const masterClass = function(settings){
     /*
      * @param string {name}
      * @param object {test}
@@ -38,8 +39,13 @@ const masterClass = function(){
         );
         return id;
     };
+    this.setup = function(){
+        return setup();
+    }
     this.run = async function(){
         startTime = (+new Date);
+        count();
+        screen = new screenBase(result, setup);
         for (let t in tests){
             let test = await sandboxes[t].check();
             tests[t].startTime = test.startTime;
@@ -70,7 +76,8 @@ const masterClass = function(){
         end();
 
     };
-
+    let setup = new setupBase();
+    let screen = new screenBase(setup);
     let resultType = [
         'not tested',
         'ok',
@@ -115,6 +122,9 @@ const masterClass = function(){
         //    screen.print(tests[t]);
         screen.end();
     };
+    if(typeof settings !== 'undefined')
+        setup.setup(settings);
+
 };
 
 
