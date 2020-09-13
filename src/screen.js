@@ -79,7 +79,7 @@ const screenClass = function(sizeIn){
      * @private
      */
     let processing = function (){
-        let progress = size-(result.ok+result.fail+result.error);
+        let progress = result.all-(result.ok+result.fail+result.error);
         ic.bar.update({
             'name'   : 'progress',
             'update' : {
@@ -147,10 +147,39 @@ const screenClass = function(sizeIn){
     /*
      * @private
      */
-    let debug = function(debug){
+    let debug = function(debugIn){
         ic.printLn('====');
-        ic.printLn(debug);
+        let lines = debugIn.stack.split('\n');
+        let first = lines[0].split(':');
+        ic.printLn(
+            ic.style(
+                first[0],
+                {
+                    color: 'yellow'
+                }
+            )+" : "+
+            first[1]
+        );
+        for(let i = 1; lines.length > i ; i++){
+            let pieces = lines[i].split(':');
+            ic.printLn(
+                pieces[0]+" | "+
+                ic.style(
+                    parseInt(pieces[1]).toString(),
+                    {
+                        color : 'cyan'
+                    }
+                )+":"+
+                ic.style(
+                    parseInt(pieces[2]).toString(),
+                    {
+                        color : 'cyan'
+                    }
+                )+" )"
+            );
+        }
     };
+
     /*
      * @private
      */
