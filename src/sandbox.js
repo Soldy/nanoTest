@@ -5,7 +5,8 @@ const sandboxClass = function(testIn){
      * @public
      * object
      */
-    this.check = async function(){
+    this.check = async function(testsIn){
+        tests = testsIn;
         await run();
         return {
             time,
@@ -22,6 +23,11 @@ const sandboxClass = function(testIn){
      * any
      */
     let test = testIn;
+    /*
+     * @private
+     * object
+     */
+    let tests = {};
     /*
      * @private
      * object 

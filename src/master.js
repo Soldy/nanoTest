@@ -39,6 +39,9 @@ const masterClass = function(settings){
         );
         return id;
     };
+    this.value = function(id){
+        return tests[id].value;
+    };
     this.setup = function(){
         return setup();
     };
@@ -47,7 +50,7 @@ const masterClass = function(settings){
         count();
         screen = new screenBase(result, setup);
         for (let t in tests){
-            let test = await sandboxes[t].check();
+            let test = await sandboxes[t].check(tests);
             tests[t].startTime = test.startTime;
             tests[t].endTime   = test.endTime;
             tests[t].time      = test.startTime - test.endTime;
@@ -55,6 +58,9 @@ const masterClass = function(settings){
             tests[t].ready     = true;
             tests[t].value     = test.value;
             tests[t].error     = test.error;
+            assertManager.tests(
+                tests
+            );
             tests[t].check     = assertManager.check(
                 tests[t].value, 
                 tests[t].rule,

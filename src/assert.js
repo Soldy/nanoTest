@@ -26,6 +26,19 @@ const assertManager = function (){
         return collection[rule.toLowerCase()](value, sample);
     };
     /*
+     * @param object {testsIn}
+     * @public
+     * boolean
+     */
+    this.tests = function(testIn){
+        tests = testIn;
+    };
+    /*
+     * @private
+     * object
+     */
+    let tests = {};
+    /*
      * @param any {value}
      * @param any {sample}
      * @private
@@ -137,55 +150,141 @@ const assertManager = function (){
         return false;
     };
     /*
+     * @param any {value}
+     * @param any {sample}
+     * @private
+     * boolean
+     */
+    let valueEqual = function(value,sample){
+        if( value == tests[sample].value )
+            return true;
+        return false;
+    };
+    /*
+     * @param any {value}
+     * @param any {sample}
+     * @private
+     * boolean
+     */
+    let valueEqualType = function(value,sample){
+        if( value === tests[sample].value )
+            return true;
+        return false;
+    };
+    /*
+     * @param object {value}
+     * @param object {sample}
+     * @private
+     * boolean
+     */
+    let valueEqualJson = function(value,sample){
+        if( JSON.stringify(value) === JSON.stringify(tests[sample].value) )
+            return true;
+        return false;
+    };
+    /*
+     * @param any {value}
+     * @param any {sample}
+     * @private
+     * boolean
+     */
+    let valueNotEqual = function(value,sample){
+        if( value !=  tests[sample].value )
+            return true;
+        return false;
+    };
+    /*
+     * @param any {value}
+     * @param any {sample}
+     * @private
+     * boolean
+     */
+    let valueNotEqualType = function(value,sample){
+        if( value !== tests[sample].value)
+            return true;
+        return false;
+    };
+    /*
      * @private
      */
     let collection = {
-        '=='            : equal,
-        'eq'            : equal,
-        'e'             : equal,
-        'equal'         : equal,
-        'equale'        : equal,
-        '!=='           : notEqual,
-        'neq'           : notEqual,
-        'ne'            : notEqual,
-        'notequal'      : notEqual,
-        'notequale'     : notEqual,
-        '==='           : equalType,
-        'eqt'           : equalType,
-        'et'            : equalType,
-        'qt'            : equalType,
-        'equaltype'     : equalType,
-        'equaletype'    : equalType,
-        '!==='          : notEqualType,
-        'neqt'          : notEqualType,
-        'net'           : notEqualType,
-        'nqt'           : notEqualType,
-        'notequaltype'  : notEqualType,
-        'notequaletype' : notEqualType,
-        'j=='           : equalJson,
-        'jeq'           : equalJson,
-        'je'            : equalJson,
-        'jsonequal'     : equalJson,
-        'jsonequale'    : equalJson,
-        '==j'           : equalJson,
-        'eqj'           : equalJson,
-        'ej'            : equalJson,
-        'equaljson'     : equalJson,
-        'equalejson'    : equalJson,
-        '>'             : greater,
-        'greater'       : greater,
-        'more'          : greater,
-        'higher'        : greater,
-        'bigger'        : greater,
-        'biger'         : greater,
-        'larger'        : greater,
-        '<'             : less,
-        'less'          : less,
-        'lower'         : less,
-        'smaller'       : less,
-        'smaler'        : less,
-        'length'        : length
-
+        '=='                 : equal,
+        'eq'                 : equal,
+        'e'                  : equal,
+        'equal'              : equal,
+        'equale'             : equal,
+        '!=='                : notEqual,
+        'neq'                : notEqual,
+        'ne'                 : notEqual,
+        'notequal'           : notEqual,
+        'notequale'          : notEqual,
+        '==='                : equalType,
+        'eqt'                : equalType,
+        'et'                 : equalType,
+        'qt'                 : equalType,
+        'equaltype'          : equalType,
+        'equaletype'         : equalType,
+        '!==='               : notEqualType,
+        'neqt'               : notEqualType,
+        'net'                : notEqualType,
+        'nqt'                : notEqualType,
+        'notequaltype'       : notEqualType,
+        'notequaletype'      : notEqualType,
+        'j=='                : equalJson,
+        'jeq'                : equalJson,
+        'je'                 : equalJson,
+        'jsonequal'          : equalJson,
+        'jsonequale'         : equalJson,
+        '==j'                : equalJson,
+        'eqj'                : equalJson,
+        'ej'                 : equalJson,
+        'equaljson'          : equalJson,
+        'equalejson'         : equalJson,
+        '>'                  : greater,
+        'greater'            : greater,
+        'more'               : greater,
+        'higher'             : greater,
+        'bigger'             : greater,
+        'biger'              : greater,
+        'larger'             : greater,
+        '<'                  : less,
+        'less'               : less,
+        'lower'              : less,
+        'smaller'            : less,
+        'smaler'             : less,
+        'length'             : length,
+        'v=='                : valueEqual,
+        'veq'                : valueEqual,
+        've'                 : valueEqual,
+        'valueequal'         : valueEqual,
+        'valueequale'        : valueEqual,
+        'v!=='               : valueNotEqual,
+        'vneq'               : valueNotEqual,
+        'vne'                : valueNotEqual,
+        'valuenotequal'      : valueNotEqual,
+        'valuenotequale'     : valueNotEqual,
+        'v==='               : valueEqualType,
+        'veqt'               : valueEqualType,
+        'vet'                : valueEqualType,
+        'vqt'                : valueEqualType,
+        'valueequaltype'     : valueEqualType,
+        'valueequaletype   ' : valueEqualType,
+        'v!==='              : valueNotEqualType,
+        'vneqt'              : valueNotEqualType,
+        'vnet'               : valueNotEqualType,
+        'vnqt'               : valueNotEqualType,
+        'valuenotequaltype'  : valueNotEqualType,
+        'valuenotequaletype' : valueNotEqualType,
+        'vj=='               : valueEqualJson,
+        'vjeq'               : valueEqualJson,
+        'vje'                : valueEqualJson,
+        'valuejsonequal'     : valueEqualJson,
+        'valuejsonequale'    : valueEqualJson,
+        'v==j'               : valueEqualJson,
+        'veqj'               : valueEqualJson,
+        'vej'                : valueEqualJson,
+        'valueequaljson'     : valueEqualJson,
+        'valueequalejson'    : valueEqualJson
     };
     /*
      * @private
