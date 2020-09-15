@@ -1,6 +1,6 @@
 
 'use strict';
-const setupBase = (require('./setup.js')).setupClass;
+const setupBase = (require('setuprc')).setupBase;
 const screenBase = (require('./screen.js')).screenClass;
 const sandboxClass = require('./sandbox.js').sandboxClass;
 const assertManager = new (require('../src/assert.js')).assertManager();
@@ -40,10 +40,12 @@ const masterClass = function(settings){
         return id;
     };
     this.value = function(id){
+        if (typeof tests[id] === 'undefined')
+            return false;
         return tests[id].value;
     };
     this.setup = function(){
-        return setup();
+        return setup;
     };
     this.run = async function(){
         startTime = (+new Date);
@@ -82,7 +84,16 @@ const masterClass = function(settings){
         end();
 
     };
-    let setup = new setupBase();
+    let setup = new setupBase({
+        'debugPrint':{
+             'type'    : 'select',
+             'list'    : [
+                 'normal',
+                 'short'
+             ],
+             'default' : 'normal'
+        }
+    });
     let screen = new screenBase(setup);
     let resultType = [
         'not tested',
