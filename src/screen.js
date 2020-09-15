@@ -117,7 +117,7 @@ const screenClass = function(resultIn, setupIn){
                 {color: 'red'}
             ) + test.name + 
                 ' : ' + 
-                test.result + 
+                test.sample + 
                 '  --- value --- ' +
             JSON.stringify(test.value)
         );
