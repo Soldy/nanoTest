@@ -1,18 +1,20 @@
 
 'use strict';
 const setupBase = (require('setuprc')).setupBase;
-const screenBase = (require('./screen.js')).screenClass;
-const sandboxClass = require('./sandbox.js').sandboxClass;
-const assertManager = new (require('../src/assert.js')).assertManager();
+const screenBase = (require('nano-test-output-cli')).screenBase;
+const sandboxClass = require('sandboxrc').sandboxClass;
+const assertManager = new (require('assertrc')).assertBase();
 
 const masterClass = function(settings){
     /*
-     * @param string {name}
-     * @param object {test}
-     * @param string {rule}
-     * @param any {sample}
+     * Add new test
+     *
+     * @param {string} name
+     * @param {object} test
+     * @param {string} rule
+     * @param {any} sample
      * @public 
-     * string {id}
+     * @return {string} id
      *
      */
     this.add = function (name, test, rule, sample) {
@@ -39,14 +41,35 @@ const masterClass = function(settings){
         );
         return id;
     };
+    /*
+     * get test function output
+     *
+     * @param {string} id 
+     * @public 
+     * @return {string} id
+     *
+     */
     this.value = function(id){
         if (typeof tests[id] === 'undefined')
             return false;
         return tests[id].value;
     };
+    /*
+     * call the setup object
+     *
+     * @public 
+     * @return {object} setup
+     *
+     */
     this.setup = function(){
         return setup;
     };
+    /*
+     * test runner
+     * @public
+     * @return {boolean}
+     *
+     */
     this.run = async function(){
         startTime = (+new Date);
         count();
@@ -82,19 +105,34 @@ const masterClass = function(settings){
         count();
         screen.change(result);
         end();
-
+        return true;
     };
+    /*
+     * setup  helper
+     * @private
+     */
     let setup = new setupBase({
         'debugPrint':{
-             'type'    : 'select',
-             'list'    : [
-                 'normal',
-                 'short'
-             ],
-             'default' : 'normal'
+            'type'    : 'select',
+            'list'    : [
+                'normal',
+                'short'
+            ],
+            'default' : 'normal'
         }
     });
+    /*
+     * screen or output 
+     * @private
+     *
+     */
     let screen = new screenBase(setup);
+    /*
+     * result type list 
+     * @private
+     * @var {array}
+     *
+     */
     let resultType = [
         'not tested',
         'ok',
@@ -102,18 +140,62 @@ const masterClass = function(settings){
         'error',
         'missing'
     ];
+    /*
+     * result counter
+     * @private
+     * @var {object}
+     *
+     */
     let result = {
         ok: 0,
         fail: 0,
         error: 0,
         missing: 0
     };
+    /*
+     * test start time
+     * @private
+     * @var {integer}
+     *
+     */
     let startTime = 0;
+    /*
+     * test finish time
+     * @private
+     * @var {integer}
+     *
+     */
     let endTime = 0;
+    /*
+     * @private
+     * @var {integer}
+     *
+     */
     let size = 0;
+    /*
+     * @private
+     * @var {integer}
+     *
+     */
     let serial = 0;
+    /*
+     * @private
+     * @var {integer}
+     *
+     */
     let tests = {};
+    /*
+     * @private
+     * @var {integer}
+     *
+     */
     let sandboxes = {};
+    /*
+     * status counter
+     * @private
+     * @return {integer}
+     *
+     */
     let count = function(){
         let newSize = 0;
         let newResult = {
@@ -136,11 +218,18 @@ const masterClass = function(settings){
         result = newResult;
         return size;
     };
+    /*
+     * @private
+     *
+     */
     let end = function(){
-        //for (let t in tests)
-        //    screen.print(tests[t]);
         screen.end();
     };
+    /*
+     *
+     * setup init 
+     *
+     */
     if(typeof settings !== 'undefined')
         setup.setup(settings);
 
