@@ -1,18 +1,72 @@
+Super simple, fast, actively maintened test tool kit.
+
 ## nano unit test
 
 Ultra mini unit test.
 
 ### install 
 
-npm install nano-test
+```bash
+npm install nanoTest
+```
 
 ### usage 
 
+```javascript
+const functest = require("nanoTest");
 
-var functest = require("nano-test");
+const test = new funtest();
 
-var test = new funtest();
+test.add (
+      "example test", 
+      ()=>{
+         return 93
+      }, 
+      "==", 
+      "93"
+);
 
-test.add ("example test", "examplefunction('123456')", "==", "93");
+test.add (
+      "example test 2",
+      ()=>{
+         return 93
+      }, 
+      "==",
+      93
+);
+
+
+test.add (
+      "example test 3",
+      {
+        "function" : (n)=>{
+                 return 93 +n
+             },
+        "options"  : [
+              1
+        ]
+      ">",
+      93
+);
+
+test.add (
+      "example test 4",
+      {
+        'function' : (n,p)=>{
+                 return {
+                      'number': 93 +n,
+                      'string': p
+             },
+       'options' : [
+              1,
+              'something'
+        ]
+      "j==",
+      {
+          'number' : 94,
+          'string' : 'something'
+      }
+);
 
 test.run();
+```
