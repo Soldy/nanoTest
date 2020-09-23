@@ -21,4 +21,5 @@ jspm_packages/
 .git
 .npmignore
 .gitignore
-
+codecov.yml
+.coverrc/
