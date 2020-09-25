@@ -236,4 +236,5 @@ const masterClass = function(settings){
 };
 
 
-exports.masterClass = masterClass;
+exports.masterBase = masterBase;
+exports.test = masterBase;
