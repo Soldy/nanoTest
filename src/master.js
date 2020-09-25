@@ -2,7 +2,7 @@
 'use strict';
 const setupBase = (require('setuprc')).setupBase;
 const screenBase = (require('nano-test-output-cli')).screenBase;
-const sandboxClass = require('sandboxrc').sandboxClass;
+const sandboxBase = require('sandboxrc').sandboxBase;
 const assertManager = new (require('assertrc')).assertBase();
 
 const masterClass = function(settings){
@@ -36,7 +36,7 @@ const masterClass = function(settings){
             'debug'    : ''
 
         };
-        sandboxes[id] = new sandboxClass(
+        sandboxes[id] = new sandboxBase(
             tests[id]
         );
         return id;
