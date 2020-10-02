@@ -104,8 +104,7 @@ const masterBase = function(settings){
         endTime = (+new Date);
         count();
         screen.change(result);
-        end();
-        return true;
+        return end();
     };
     /*
      * setup  helper
@@ -119,6 +118,30 @@ const masterBase = function(settings){
                 'short'
             ],
             'default' : 'normal'
+        },
+        'exitCodeFail':{
+            'type'    : 'select',
+            'list'    : [
+                '1',
+                '0',
+            ],
+            'default' : '1'
+        },
+        'exitCodeError':{
+            'type'    : 'select',
+            'list'    : [
+                '1',
+                '0',
+            ],
+            'default' : '1'
+        },
+        'exitCodeMissing':{
+            'type'    : 'select',
+            'list'    : [
+                '1',
+                '0',
+            ],
+            'default' : '1'
         }
     });
     /*
@@ -202,7 +225,7 @@ const masterBase = function(settings){
             start:startTime,
             end:endTime,
             time:(+new Date)-startTime,
-            all:0,
+    all:0,
             ok: 0,
             fail: 0,
             error: 0,
@@ -224,6 +247,22 @@ const masterBase = function(settings){
      */
     let end = function(){
         screen.end();
+        if (
+             (setup.get('exitCodeMissing') === '0')&&
+             (result.missing >0)
+        )
+            return process.exit(1);
+        if (
+             (setup.get('exitCodeError') === '0')&&
+             (result.error >0)
+        )
+            return process.exit(1);
+        if (
+             (setup.get('exitCodeFail') === '0')&&
+             (result.fail >0)
+        )
+            return process.exit(1);
+        return process.exit(0);
     };
     /*
      *
