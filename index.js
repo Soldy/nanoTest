@@ -119,6 +119,10 @@ const masterBase = function(settings){
             ],
             'default' : 'normal'
         },
+        'progressBar':{
+            'type'    : 'bool',
+            'default' : true
+        },
         'exitCodeFail':{
             'type'    : 'select',
             'list'    : [
@@ -149,7 +153,7 @@ const masterBase = function(settings){
      * @private
      *
      */
-    let screen = new screenBase(setup);
+    let screen = '';
     /*
      * result type list 
      * @private
@@ -225,7 +229,7 @@ const masterBase = function(settings){
             start:startTime,
             end:endTime,
             time:(+new Date)-startTime,
-    all:0,
+            all:0,
             ok: 0,
             fail: 0,
             error: 0,
@@ -272,6 +276,7 @@ const masterBase = function(settings){
     if(typeof settings !== 'undefined')
         setup.setup(settings);
 
+    screen = new screenBase(setup);
 };
 
 
