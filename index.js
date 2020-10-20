@@ -275,8 +275,6 @@ const masterBase = function(settings){
      */
     if(typeof settings !== 'undefined')
         setup.setup(settings);
-
-    screen = new screenBase(setup);
 };
 
 
