@@ -37,7 +37,7 @@ typings/
 *.tar.bz2
 *.txz
 *.tar.xz
-
+test
 .npm
 .yarn-integrity
 .env
