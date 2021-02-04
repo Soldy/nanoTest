@@ -11,9 +11,9 @@
     "url": "https://github.com/Soldy/nanoTest"
   },
   "dependencies": {
-    "assertrc": "^0.9.9-beta10",
+    "assertrc": "^1.0.2",
     "interactiveConsole": "^0.0.7-alpha0",
-    "nanoTest": "^0.9.9-beta10",
+    "nanoTest": "^0.9.9-beta11",
     "nano-test-output-cli": "^0.9.9-beta10",
     "sandboxrc": "^0.9.9-beta10",
     "setuprc": "^0.9.9-beta10",
