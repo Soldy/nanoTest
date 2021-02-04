@@ -1,10 +1,16 @@
-
+/*
+ *  @Soldy\nanoTest\2021.02.04\GPL3
+ */
 'use strict';
-const setupBase = (require('setuprc')).setupBase;
-const screenBase = (require('nano-test-output-cli')).screenBase;
-const sandboxBase = require('sandboxrc').sandboxBase;
-const assertManager = new (require('assertrc')).assertBase();
+const setupBase = (require('setuprc')).base;
+const screenBase = (require('nano-test-output-cli')).base;
+const sandboxBase = require('sandboxrc').base;
+const assertManager = new (require('assertrc')).base();
 
+/*
+ * @param {setuprc} settings 
+ * @prototype
+ */
 const masterBase = function(settings){
     /*
      * Add new test
@@ -223,7 +229,7 @@ const masterBase = function(settings){
      * @return {integer}
      *
      */
-    let count = function(){
+    const count = function(){
         let newSize = 0;
         let newResult = {
             start:startTime,
@@ -249,20 +255,20 @@ const masterBase = function(settings){
      * @private
      *
      */
-    let end = function(){
+    const end = function(){
         screen.end();
         if (
-             (setup.get('exitCodeMissing') === '0')&&
+            (setup.get('exitCodeMissing') === '0')&&
              (result.missing >0)
         )
             return process.exit(1);
         if (
-             (setup.get('exitCodeError') === '0')&&
+            (setup.get('exitCodeError') === '0')&&
              (result.error >0)
         )
             return process.exit(1);
         if (
-             (setup.get('exitCodeFail') === '0')&&
+            (setup.get('exitCodeFail') === '0')&&
              (result.fail >0)
         )
             return process.exit(1);
@@ -278,5 +284,5 @@ const masterBase = function(settings){
 };
 
 
-exports.masterBase = masterBase;
+exports.base = masterBase;
 exports.test = masterBase;
