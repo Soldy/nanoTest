@@ -49,6 +49,7 @@ dist
 .git
 .npmignore
 .gitignore
+.github/
 .editorconfig
 .eslintrc.json
 .jshintrc
