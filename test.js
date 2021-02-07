@@ -45,6 +45,8 @@ let nanoTestFull=()=>{
         '!=', {0:1}
     );
     nanoTest.run({ok:4,failed:10,error:1,missing:1});// this test is a test test so 4 ok  10 failed 1 error 1 missing is the exectation
+    /*the expectation is 4 ok 10 failed 1 error 1 missing */
+    
 };
 
 nanoTestFull(); 
