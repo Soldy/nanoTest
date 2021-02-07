@@ -37,7 +37,7 @@
     "simpletest"
   ],
   "author": "Soldy <npmjs@gidigi.com> (http://gidigi.com)",
-  "license": "GPLv3",
+  "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/Soldy/nanoTest/issues"
   }
