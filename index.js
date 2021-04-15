@@ -2,10 +2,10 @@
  *  @Soldy\nanoTest\2021.02.04\GPL3
  */
 'use strict';
-const setupBase = (require('setuprc')).base;
-const screenBase = (require('nano-test-output-cli')).base;
-const sandboxBase = require('sandboxrc').base;
-const assertManager = new (require('assertrc')).base();
+const $setuprc = (require('setuprc')).base;
+const $screen = (require('nano-test-output-cli')).base;
+const $sandboxrc = require('sandboxrc').base;
+const $assertrc = new (require('assertrc')).base();
 
 /*
  * @param {setuprc} settings 
@@ -24,9 +24,9 @@ const masterBase = function(settings){
      *
      */
     this.add = function (name, test, rule, sample) {
-        let id = 't'+serial+'t';
-        serial++;
-        tests[id] = {
+        let id = 't'+_serial+'t';
+        _serial++;
+        _tests[id] = {
             'name'     : name,
             'test'     : test,
             'rule'     : rule,
@@ -42,8 +42,8 @@ const masterBase = function(settings){
             'debug'    : ''
 
         };
-        sandboxes[id] = new sandboxBase(
-            tests[id]
+        _sandboxes[id] = new $sandboxrc(
+            _tests[id]
         );
         return id;
     };
@@ -56,9 +56,9 @@ const masterBase = function(settings){
      *
      */
     this.value = function(id){
-        if (typeof tests[id] === 'undefined')
+        if (typeof _tests[id] === 'undefined')
             return false;
-        return tests[id].value;
+        return _tests[id].value;
     };
     /*
      * call the setup object
@@ -68,7 +68,7 @@ const masterBase = function(settings){
      *
      */
     this.setup = function(){
-        return setup;
+        return _setup;
     };
     /*
      * test runner
@@ -77,46 +77,46 @@ const masterBase = function(settings){
      *
      */
     this.run = async function(){
-        startTime = (+new Date);
-        count();
-        screen = new screenBase(result, setup);
-        for (let t in tests){
-            let test = await sandboxes[t].check(tests);
-            tests[t].startTime = test.startTime;
-            tests[t].endTime   = test.endTime;
-            tests[t].time      = test.startTime - test.endTime;
-            tests[t].result    = test.result;
-            tests[t].ready     = true;
-            tests[t].value     = test.value;
-            tests[t].error     = test.error;
-            assertManager.tests(
-                tests
+        _start_time = (+new Date);
+        _count();
+        _screen = new $screen(_result, _setup);
+        for (let t in _tests){
+            let test = await _sandboxes[t].check(_tests);
+            _tests[t].startTime = test.startTime;
+            _tests[t].endTime   = test.endTime;
+            _tests[t].time      = test.startTime - test.endTime;
+            _tests[t].result    = test.result;
+            _tests[t].ready     = true;
+            _tests[t].value     = test.value;
+            _tests[t].error     = test.error;
+            $assertrc.tests(
+                _tests
             );
-            tests[t].check     = assertManager.check(
-                tests[t].value, 
-                tests[t].rule,
-                tests[t].sample
+            _tests[t].check     = $assertrc.check(
+                _tests[t].value, 
+                _tests[t].rule,
+                _tests[t].sample
             );
-            if(tests[t].result === 0){
-                if( tests[t].check === true ){
-                    tests[t].result = 1;
+            if(_tests[t].result === 0){
+                if(_tests[t].check === true){
+                    _tests[t].result = 1;
                 }else{
-                    tests[t].result = 2;
+                    _tests[t].result = 2;
                 }
             }
-            count();
-            screen.change(result, tests[t]);
+            _count();
+            _screen.change(_result, _tests[t]);
         }
-        endTime = (+new Date);
-        count();
-        screen.change(result);
-        return end();
+        _end_time = (Date.now());
+        _count();
+        _screen.change(_result);
+        return _end();
     };
     /*
      * setup  helper
      * @private
      */
-    let setup = new setupBase({
+    let _setup = new $setuprc({
         'debugPrint':{
             'type'    : 'select',
             'list'    : [
@@ -159,14 +159,14 @@ const masterBase = function(settings){
      * @private
      *
      */
-    let screen = '';
+    let _screen = '';
     /*
      * result type list 
      * @private
      * @var {array}
      *
      */
-    let resultType = [
+    let _result_type = [
         'not tested',
         'ok',
         'fail',
@@ -179,7 +179,7 @@ const masterBase = function(settings){
      * @var {object}
      *
      */
-    let result = {
+    let _result = {
         ok: 0,
         fail: 0,
         error: 0,
@@ -191,85 +191,85 @@ const masterBase = function(settings){
      * @var {integer}
      *
      */
-    let startTime = 0;
+    let _start_time = 0;
     /*
      * test finish time
      * @private
      * @var {integer}
      *
      */
-    let endTime = 0;
+    let _end_time = 0;
     /*
      * @private
      * @var {integer}
      *
      */
-    let size = 0;
+    let _size = 0;
     /*
      * @private
      * @var {integer}
      *
      */
-    let serial = 0;
+    let _serial = 0;
     /*
      * @private
      * @var {integer}
      *
      */
-    let tests = {};
+    let _tests = {};
     /*
      * @private
      * @var {integer}
      *
      */
-    let sandboxes = {};
+    let _sandboxes = {};
     /*
      * status counter
      * @private
      * @return {integer}
      *
      */
-    const count = function(){
+    const _count = function(){
         let newSize = 0;
         let newResult = {
-            start:startTime,
-            end:endTime,
-            time:(+new Date)-startTime,
+            start:_start_time,
+            end:_end_time,
+            time:(Date.now())-_start_time,
             all:0,
             ok: 0,
             fail: 0,
             error: 0,
             missing: 0
         };
-        for (let i in tests){
+        for (let i in _tests){
             newSize++;
-            if(tests[i].ready === true)
-                newResult[resultType[tests[i].result]]++;
+            if(_tests[i].ready === true)
+                newResult[_result_type[_tests[i].result]]++;
         }
-        size = newSize;
-        newResult.all = size;
-        result = newResult;
-        return size;
+        _size = newSize;
+        newResult.all = _size;
+        _result = newResult;
+        return _size;
     };
     /*
      * @private
      *
      */
-    const end = function(){
-        screen.end();
+    const _end = function(){
+        _screen.end();
         if (
-            (setup.get('exitCodeMissing') === '0')&&
-             (result.missing >0)
+            (_setup.get('exitCodeMissing') === '0')&&
+             (_result.missing >0)
         )
             return process.exit(1);
         if (
-            (setup.get('exitCodeError') === '0')&&
-             (result.error >0)
+            (_setup.get('exitCodeError') === '0')&&
+             (_result.error >0)
         )
             return process.exit(1);
         if (
-            (setup.get('exitCodeFail') === '0')&&
-             (result.fail >0)
+            (_setup.get('exitCodeFail') === '0')&&
+             (_result.fail >0)
         )
             return process.exit(1);
         return process.exit(0);
@@ -280,7 +280,7 @@ const masterBase = function(settings){
      *
      */
     if(typeof settings !== 'undefined')
-        setup.setup(settings);
+        _setup.setup(settings);
 };
 
 
