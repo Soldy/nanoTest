@@ -1,9 +1,5 @@
 'use strict';
 
-const test  = new (require('nanoTest')).test({
-    'progressBar':'false',
-    'debugPrint' : 'short'
-});
 const missingFunction = new (function(){})
 const errorFunction = function(){ return subidubibu();};
 console.log('the expectation is 4 ok 10 failed 1 error 1 missing');
