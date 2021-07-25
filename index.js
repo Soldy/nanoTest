@@ -81,31 +81,7 @@ const masterBase = function(settings){
         _count();
         _screen = new $screen(_result, _setup);
         for (let t in _tests){
-            let test = await _sandboxes[t].check(_tests);
-            _tests[t].startTime = test.startTime;
-            _tests[t].endTime   = test.endTime;
-            _tests[t].time      = test.startTime - test.endTime;
-            _tests[t].result    = test.result;
-            _tests[t].ready     = true;
-            _tests[t].value     = test.value;
-            _tests[t].error     = test.error;
-            $assertrc.tests(
-                _tests
-            );
-            _tests[t].check     = $assertrc.check(
-                _tests[t].value, 
-                _tests[t].rule,
-                _tests[t].sample
-            );
-            if(_tests[t].result === 0){
-                if(_tests[t].check === true){
-                    _tests[t].result = 1;
-                }else{
-                    _tests[t].result = 2;
-                }
-            }
-            _count();
-            _screen.change(_result, _tests[t]);
+            await _run(t);
         }
         _end_time = (Date.now());
         _count();
@@ -251,6 +227,39 @@ const masterBase = function(settings){
         _result = newResult;
         return _size;
     };
+    /*
+     * @param {object}
+     * @private
+     *
+     */
+    const _run = async function(test){
+        const result = await _sandboxes[test].check(_tests);
+        _tests[test].startTime = result.startTime;
+        _tests[test].endTime   = result.endTime;
+        _tests[test].time      = result.time;
+        _tests[test].result    = result.result;
+        _tests[test].ready     = true;
+        _tests[test].value     = result.value;
+        _tests[test].error     = result.error;
+        $assertrc.tests(
+            _tests
+        );
+        _tests[test].check     = $assertrc.check(
+            _tests[test].value, 
+            _tests[test].rule,
+            _tests[test].sample
+        );
+        if(_tests[test].result === 0){
+            if(_tests[test].check === true){
+                _tests[test].result = 1;
+            }else{
+                _tests[test].result = 2;
+            }
+        }
+        _count();
+        _screen.change(_result, _tests[test]);
+
+    }
     /*
      * @private
      *
