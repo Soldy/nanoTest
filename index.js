@@ -39,9 +39,12 @@ const masterBase = function(settings){
             'error'    : '',
             'value'    : '',
             'check'    : false,
-            'debug'    : ''
+            'debug'    : '',
+            'willfail' : false
 
         };
+        if(rule === 'error')
+            _tests[id].willfail = true;
         _sandboxes[id] = new $sandboxrc(
             _tests[id]
         );
@@ -93,7 +96,7 @@ const masterBase = function(settings){
      * @private
      */
     let _setup = new $setuprc({
-        'debugPrint':{
+        'debug_print':{
             'type'    : 'select',
             'list'    : [
                 'normal',
@@ -101,33 +104,21 @@ const masterBase = function(settings){
             ],
             'default' : 'normal'
         },
-        'progressBar':{
+        'progress_bar':{
             'type'    : 'bool',
             'default' : true
         },
-        'exitCodeFail':{
-            'type'    : 'select',
-            'list'    : [
-                '1',
-                '0',
-            ],
-            'default' : '1'
+        'exit_code_fail':{
+            'type'    : 'bool',
+            'default' : true
         },
-        'exitCodeError':{
-            'type'    : 'select',
-            'list'    : [
-                '1',
-                '0',
-            ],
-            'default' : '1'
+        'exit_code_error':{
+            'type'    : 'bool',
+            'default' : true
         },
-        'exitCodeMissing':{
-            'type'    : 'select',
-            'list'    : [
-                '1',
-                '0',
-            ],
-            'default' : '1'
+        'exit_code_missing':{
+            'type'    : 'bool',
+            'default' : true
         }
     });
     /*
@@ -244,11 +235,19 @@ const masterBase = function(settings){
         $assertrc.tests(
             _tests
         );
-        _tests[test].check     = $assertrc.check(
-            _tests[test].value, 
-            _tests[test].rule,
-            _tests[test].sample
-        );
+        if(_tests[test].willfail === false)
+            _tests[test].check = $assertrc.check(
+                _tests[test].value,
+                _tests[test].rule,
+                _tests[test].sample
+            );
+        if(
+           (_tests[test].willfail === true)&&
+           (_tests[test].error !== '')
+        ){
+            _tests[test].check = true;
+            _tests[test].result = 0;
+        }
         if(_tests[test].result === 0){
             if(_tests[test].check === true){
                 _tests[test].result = 1;
@@ -266,22 +265,23 @@ const masterBase = function(settings){
      */
     const _end = function(){
         _screen.end();
+        let exit_code = 0;
         if (
-            (_setup.get('exitCodeMissing') === '0')&&
-             (_result.missing >0)
+            (_setup.get('exit_code_missing') === true)&&
+            (_result.missing >0)
         )
-            return process.exit(1);
+            exit_code =1;
         if (
-            (_setup.get('exitCodeError') === '0')&&
-             (_result.error >0)
+            (_setup.get('exit_code_error') === true)&&
+            (_result.error >0)
         )
-            return process.exit(1);
+            exit_code =1;
         if (
-            (_setup.get('exitCodeFail') === '0')&&
-             (_result.fail >0)
+            (_setup.get('exit_code_fail') === true)&&
+            (_result.fail >0)
         )
-            return process.exit(1);
-        return process.exit(0);
+            exit_code =1;
+        return process.exit(exit_code);
     };
     /*
      *

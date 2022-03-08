@@ -7,8 +7,8 @@ console.log('the expectation is 4 ok 10 failed 1 error 1 missing');
 let nanoTestFull=()=>{
     let nanotest = require('./index.js').test;
     let nanoTest = new nanotest({
-        'progressBar':'false',
-        'debugPrint':'short'
+        'progress_bar':'false',
+        'debug_print':'short'
     });
     nanoTest.add('"1. ", (()=>{return "0"})(), "!=", "1"',        ()=>{return '0';}, '!=', '1');
     nanoTest.add('"2. ", (()=>{return "0"})(), "!=", 1',          ()=>{return '0';}, '!=', 1);
@@ -40,7 +40,15 @@ let nanoTestFull=()=>{
         },
         '!=', {0:1}
     );
-    nanoTest.run({ok:4,failed:10,error:1,missing:1});// this test is a test test so 4 ok  10 failed 1 error 1 missing is the exectation
+    nanoTest.add(
+        '"17.", errorFunctior, "error"',
+        {
+            'function':errorFunction,
+            'options':[]
+        },
+        'error'
+    );
+    nanoTest.run({ok:5,failed:10,error:1,missing:1});// this test is a test test so 4 ok  10 failed 1 error 1 missing is the exectation
     /*the expectation is 4 ok 10 failed 1 error 1 missing */
     
 };
