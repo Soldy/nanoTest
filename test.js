@@ -7,8 +7,11 @@ console.log('the expectation is 4 ok 10 failed 1 error 1 missing');
 let nanoTestFull=()=>{
     let nanotest = require('./index.js').test;
     let nanoTest = new nanotest({
-        'progress_bar':'false',
-        'debug_print':'short'
+        'progress_bar':false,
+        'debug_print':'short',
+        'exit_code_missing':false,
+        'exit_code_fail':false,
+        'exit_code_error':false
     });
     nanoTest.add('"1. ", (()=>{return "0"})(), "!=", "1"',        ()=>{return '0';}, '!=', '1');
     nanoTest.add('"2. ", (()=>{return "0"})(), "!=", 1',          ()=>{return '0';}, '!=', 1);
