@@ -2,7 +2,7 @@
 
 const missingFunction = new (function(){})
 const errorFunction = function(){ return subidubibu();};
-console.log('the expectation is 4 ok 10 failed 1 error 1 missing');
+console.log('the expectation is 5 ok 10 failed 1 error 1 missing');
 
 let nanoTestFull=()=>{
     let nanotest = require('./index.js').test;
