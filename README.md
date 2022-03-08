@@ -67,6 +67,28 @@ test.add (
           'string' : 'something'
       }
 );
+```
+### add expected fail
 
+```
+test.add (
+      'expected fail',
+      {
+        'function' : ()=>{
+                 just_fail();
+             },
+        'options'  : []
+      'error'
+);
+```
+
+
+
+## run test 
+```
 test.run();
 ```
+```
+
+
+
