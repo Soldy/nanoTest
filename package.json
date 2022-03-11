@@ -1,6 +1,6 @@
 {
   "name": "nanoTest",
-  "version": "0.9.9-beta24",
+  "version": "0.9.9-beta26",
   "description": "nano size unit test toolkit.",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "assertrc": "1.0.4-rc5",
-    "nano-test-output-cli": "0.9.9-beta23",
+    "nano-test-output-cli": "0.9.9-beta26",
     "sandboxrc": "0.9.9-beta22",
     "setuprc": "^0.9.9-beta19"
   },
