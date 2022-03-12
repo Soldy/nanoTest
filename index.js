@@ -119,6 +119,10 @@ const masterBase = function(settings){
         'exit_code_missing':{
             'type'    : 'bool',
             'default' : true
+        },
+        'serialize':{
+            'type'    : 'bool',
+            'default' : false
         }
     });
     /*
@@ -243,10 +247,18 @@ const masterBase = function(settings){
             );
         if(
            (_tests[test].willfail === true)&&
-           (_tests[test].error !== '')
+           (_tests[test].error !== '')&&
+           (_tests[test].error.length > 0)
         ){
             _tests[test].check = true;
             _tests[test].result = 0;
+        }
+        if(
+           (_tests[test].willfail === true)&&
+           (_tests[test].error.length === 0)
+        ){
+            _tests[test].check = false;
+            _tests[test].result = 0 ;
         }
         if(_tests[test].result === 0){
             if(_tests[test].check === true){
