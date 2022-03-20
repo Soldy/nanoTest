@@ -70,7 +70,7 @@ test.add (
 ```
 ### add expected fail
 
-```
+```javascript
 test.add (
       'expected fail',
       {
@@ -85,10 +85,26 @@ test.add (
 
 
 ## run test 
-```
+
+```javascript
 test.run();
 ```
 ```
 
 
+## control variables
 
+
+
+   |   name                  | type    | default |   comment
+   |-------------------------|---------|---------|-----------------------------
+   | ```expected_ok```       | integer |     -1  |  test number expected ok
+   | ```expected_fail```     | integer |     -1  |  test number expected fail
+   | ```expected_error```    | integer |     -1  |  test number expected throw error
+   | ```expected_missing```  | integer |     -1  |  test number expected missing
+   | ```exit_code_fail```    | boolean |   true  |
+   | ```exit_code_error```   | boolean |   true  |
+   | ```exit_code_missing``` | boolean |   true  |
+   | ```progress_bar```      | boolean |   true  |  enable/disable progress bar
+   | ```serialize```         | boolean |   false |  enable test list index visualization
+   | ```debug_print```       | string  |   long  |  error message format options : short,long
