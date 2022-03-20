@@ -51,7 +51,15 @@ let nanoTestFull=()=>{
         },
         'error'
     );
-    nanoTest.run({ok:5,failed:10,error:1,missing:1});// this test is a test test so 4 ok  10 failed 1 error 1 missing is the exectation
+    nanoTest.add(
+        '"18.", errorFunctior withouth "error"',
+        {
+            'function':()=>{return undefined},
+            'options':[]
+        },
+        'error'
+    );
+    nanoTest.run({ok:5,failed:11,error:1,missing:1});// this test is a test test so 5 ok  11 failed 1 error 1 missing is the exectation
     /*the expectation is 4 ok 10 failed 1 error 1 missing */
     
 };
