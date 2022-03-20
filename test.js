@@ -2,7 +2,6 @@
 
 const missingFunction = new (function(){})
 const errorFunction = function(){ return subidubibu();};
-console.log('the expectation is 5 ok 10 failed 1 error 1 missing');
 
 let nanoTestFull=()=>{
     let nanotest = require('./index.js').test;
@@ -59,9 +58,12 @@ let nanoTestFull=()=>{
         },
         'error'
     );
-    nanoTest.run({ok:5,failed:11,error:1,missing:1});// this test is a test test so 5 ok  11 failed 1 error 1 missing is the exectation
-    /*the expectation is 4 ok 10 failed 1 error 1 missing */
-    
+    nanoTest.run({
+        expected_ok:4,
+        expected_fail:11,
+        expected_error:2,
+        expected_missing:1
+    });
 };
 
 nanoTestFull(); 
