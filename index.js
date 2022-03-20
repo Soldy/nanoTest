@@ -100,9 +100,10 @@ const masterBase = function(settings){
             'type'    : 'select',
             'list'    : [
                 'normal',
+                'long',
                 'short'
             ],
-            'default' : 'normal'
+            'default' : 'long'
         },
         'progress_bar':{
             'type'    : 'bool',
@@ -119,6 +120,22 @@ const masterBase = function(settings){
         'exit_code_missing':{
             'type'    : 'bool',
             'default' : true
+        },
+        'expected_ok' : {
+            'type'    : 'integer',
+            'default' : -1
+        },
+        'expected_fail' : {
+            'type'    : 'integer',
+            'default' : -1
+        },
+        'expected_error' : {
+            'type'    : 'integer',
+            'default' : -1
+        },
+        'expected_missing' : {
+            'type'    : 'integer',
+            'default' : -1
         },
         'serialize':{
             'type'    : 'bool',
@@ -276,7 +293,6 @@ const masterBase = function(settings){
      *
      */
     const _end = function(){
-        _screen.end();
         let exit_code = 0;
         if (
             (_setup.get('exit_code_missing') === true)&&
@@ -293,6 +309,31 @@ const masterBase = function(settings){
             (_result.fail >0)
         )
             exit_code =1;
+        if (
+            (_setup.get('expected_ok') > -1)&&
+            (_setup.get('expected_ok') !== _result.ok )
+        )
+            exit_code =1;
+        if (
+            (_setup.get('expected_fail') > -1)&&
+            (_setup.get('expected_fail') !== _result.fail )
+        )
+            exit_code =1;
+        if (
+            (_setup.get('expected_error') > -1)&&
+            (_setup.get('expected_error') !== _result.error )
+        )
+            exit_code =1;
+        if (
+            (_setup.get('expected_missing') > -1)&&
+            (_setup.get('expected_missing') !== _result.missing )
+        )
+            exit_code =1;
+        if (exit_code > 0){
+            _screen.end(false);
+        }else{
+            _screen.end(true);
+        }
         return process.exit(exit_code);
     };
     /*
