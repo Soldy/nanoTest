@@ -89,7 +89,6 @@ test.add (
 ```javascript
 test.run();
 ```
-```
 
 
 ## control variables
