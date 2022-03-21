@@ -18,35 +18,36 @@ const functest = require("nanoTest");
 const test = new funtest();
 
 test.add (
-      "example test", 
-      ()=>{
-         return 93
-      }, 
-      "==", 
-      "93"
+    "example test", 
+    ()=>{
+        return 93
+    },
+    "==",
+   "93"
 );
 
 test.add (
-      "example test 2",
-      ()=>{
-         return 93
-      }, 
-      "==",
-      93
+    "example test 2",
+    ()=>{
+        return 93
+    }, 
+    "==",
+    93
 );
 
 
 test.add (
-      "example test 3",
-      {
+    "example test 3",
+    {
         "function" : (n)=>{
                  return 93 +n
              },
         "options"  : [
               1
         ]
-      ">",
-      93
+    },
+    ">",
+    93
 );
 
 test.add (
