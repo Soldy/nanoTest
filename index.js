@@ -265,10 +265,18 @@ const masterBase = function(settings){
         if(
            (_tests[test].willfail === true)&&
            (_tests[test].error !== '')&&
-           (_tests[test].error.length > 0)
+           (_tests[test].error !== false)
         ){
-            _tests[test].check = true;
-            _tests[test].result = 0;
+           if (
+                (typeof _tests[test].sample === 'undefined')||
+                (_tests[test].sample === _tests[test].error.message)
+            ){
+               _tests[test].check = true;
+               _tests[test].result = 0;
+               _tests[test].error = false;
+               result.error = false;
+           }
+
         }
         if(
            (_tests[test].willfail === true)&&

@@ -1,6 +1,6 @@
 'use strict';
 
-const missingFunction = new (function(){})
+const missingFunction = new (function(){});
 const errorFunction = function(){ return subidubibu();};
 
 let nanoTestFull=()=>{
@@ -53,7 +53,7 @@ let nanoTestFull=()=>{
     nanoTest.add(
         '"18.", errorFunctior withouth "error"',
         {
-            'function':()=>{return undefined},
+            'function':()=>{return undefined;},
             'options':[]
         },
         'error'
