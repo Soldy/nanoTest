@@ -1,6 +1,6 @@
 {
   "name": "nanoTest",
-  "version": "0.9.9-beta28",
+  "version": "0.9.9-beta29",
   "description": "nano size unit test toolkit.",
   "main": "index.js",
   "scripts": {
@@ -11,10 +11,10 @@
     "url": "https://github.com/Soldy/nanoTest"
   },
   "dependencies": {
-    "assertrc": "1.0.4-rc6",
+    "assertrc": "1.0.6",
     "nano-test-output-cli": "0.9.9-beta28",
     "sandboxrc": "0.9.9-beta23",
-    "setuprc": "^0.9.9-beta19"
+    "setuprc": "0.9.9-beta20"
   },
   "keywords": [
     "unit",
