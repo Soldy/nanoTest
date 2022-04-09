@@ -1,6 +1,6 @@
 {
   "name": "nanoTest",
-  "version": "0.9.9-beta29",
+  "version": "0.9.9-beta30",
   "description": "nano size unit test toolkit.",
   "main": "index.js",
   "scripts": {
