@@ -253,15 +253,16 @@ const masterBase = function(settings){
         _tests[test].ready     = true;
         _tests[test].value     = result.value;
         _tests[test].error     = result.error;
-        $assertrc.tests(
-            _tests
-        );
         if(_tests[test].willfail === false)
             _tests[test].check = $assertrc.check(
                 _tests[test].value,
                 _tests[test].rule,
                 _tests[test].sample
             );
+        console.log(_tests[test].name);
+        console.log(_tests[test].rule);
+        console.log(_tests[test].willfail);
+        console.log(_tests[test].check);
         if(
             (_tests[test].willfail === true)&&
            (_tests[test].error !== '')&&

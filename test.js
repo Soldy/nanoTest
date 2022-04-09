@@ -58,6 +58,14 @@ let nanoTestFull=()=>{
         },
         'error'
     );
+    nanoTest.add(
+        '"19.", no error result test',
+        {
+            'function':()=>{return 'can be anything';},
+            'options':[]
+        },
+        '!error'
+    );
     nanoTest.run({
         expected_ok:4,
         expected_fail:11,
