@@ -259,10 +259,6 @@ const masterBase = function(settings){
                 _tests[test].rule,
                 _tests[test].sample
             );
-        console.log(_tests[test].name);
-        console.log(_tests[test].rule);
-        console.log(_tests[test].willfail);
-        console.log(_tests[test].check);
         if(
             (_tests[test].willfail === true)&&
            (_tests[test].error !== '')&&

@@ -67,7 +67,7 @@ let nanoTestFull=()=>{
         '!error'
     );
     nanoTest.run({
-        expected_ok:4,
+        expected_ok:5,
         expected_fail:11,
         expected_error:2,
         expected_missing:1
