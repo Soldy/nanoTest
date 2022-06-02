@@ -261,8 +261,8 @@ const masterBase = function(settings){
             );
         if(
             (_tests[test].willfail === true)&&
-           (_tests[test].error !== '')&&
-           (_tests[test].error !== false)
+            (_tests[test].error !== '')&&
+            (_tests[test].error !== false)
         ){
             if (
                 (typeof _tests[test].sample === 'undefined')||
