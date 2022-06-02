@@ -59,7 +59,7 @@ const masterBase = function(settings){
      *
      */
     this.value = function(id){
-        if (typeof _tests[id] === 'undefined')
+        if(typeof _tests[id] === 'undefined')
             return false;
         return _tests[id].value;
     };
@@ -299,42 +299,42 @@ const masterBase = function(settings){
      */
     const _end = function(){
         let exit_code = 0;
-        if (
+        if(
             (_setup.get('exit_code_missing') === true)&&
             (_result.missing >0)
         )
             exit_code =1;
-        if (
+        if(
             (_setup.get('exit_code_error') === true)&&
             (_result.error >0)
         )
             exit_code =1;
-        if (
+        if(
             (_setup.get('exit_code_fail') === true)&&
             (_result.fail >0)
         )
             exit_code =1;
-        if (
+        if(
             (_setup.get('expected_ok') > -1)&&
             (_setup.get('expected_ok') !== _result.ok )
         )
             exit_code =1;
-        if (
+        if(
             (_setup.get('expected_fail') > -1)&&
             (_setup.get('expected_fail') !== _result.fail )
         )
             exit_code =1;
-        if (
+        if(
             (_setup.get('expected_error') > -1)&&
             (_setup.get('expected_error') !== _result.error )
         )
             exit_code =1;
-        if (
+        if(
             (_setup.get('expected_missing') > -1)&&
             (_setup.get('expected_missing') !== _result.missing )
         )
             exit_code =1;
-        if (exit_code > 0){
+        if(exit_code > 0){
             _screen.end(false);
         }else{
             _screen.end(true);
