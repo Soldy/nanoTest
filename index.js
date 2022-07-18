@@ -41,7 +41,6 @@ const masterBase = function(settings){
             'check'    : false,
             'debug'    : '',
             'willfail' : false
-
         };
         if(rule === 'error')
             _tests[id].willfail = true;
@@ -76,15 +75,28 @@ const masterBase = function(settings){
     /*
      * test runner
      * @public
+     *
+     */
+    this.partly = async function(){
+        _screenInit();
+        for (let t in _tests){
+            if(_tests[t].startTime === 0)
+                await _run(t);
+        }
+    };
+    /*
+     * test runner
+     * @public
      * @return {boolean}
      *
      */
     this.run = async function(){
         _start_time = (+new Date);
         _count();
-        _screen = new $screen(_result, _setup);
+        _screenInit();
         for (let t in _tests){
-            await _run(t);
+            if(_tests[t].startTime === 0)
+                await _run(t);
         }
         _end_time = (Date.now());
         _count();
@@ -239,6 +251,15 @@ const masterBase = function(settings){
         _result = newResult;
         return _size;
     };
+    /*
+     * @private
+     * @return {void}
+     *
+     */
+    const _screenInit = function(){
+        if(typeof _screen.change === 'undefined')
+            _screen = new $screen(_result, _setup);
+    }
     /*
      * @param {object}
      * @private
