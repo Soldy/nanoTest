@@ -1,6 +1,6 @@
 {
   "name": "nanoTest",
-  "version": "0.9.9-beta31",
+  "version": "0.9.9-beta32",
   "description": "nano size unit test toolkit.",
   "main": "index.js",
   "scripts": {
@@ -35,5 +35,6 @@
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/Soldy/nanoTest/issues"
-  }
+  },
+  "homepage": "https://github.com/Soldy/nanoTest#readme"
 }
