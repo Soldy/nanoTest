@@ -3,7 +3,7 @@
 const missingFunction = new (function(){});
 const errorFunction = function(){ return subidubibu();};
 
-let nanoTestFull=()=>{
+let nanoTestFull=async ()=>{
     let nanotest = require('./index.js').test;
     let nanoTest = new nanotest({
         'progress_bar':false,
@@ -12,6 +12,8 @@ let nanoTestFull=()=>{
         'exit_code_fail':false,
         'exit_code_error':false
     });
+    nanoTest.add('"0. ", partly function test',        ()=>{return true;}, '===', true);
+    await nanoTest.partly();
     nanoTest.add('"1. ", (()=>{return "0"})(), "!=", "1"',        ()=>{return '0';}, '!=', '1');
     nanoTest.add('"2. ", (()=>{return "0"})(), "!=", 1',          ()=>{return '0';}, '!=', 1);
     nanoTest.add('"3. ", (()=>{return "0"})(), "==", "0"',        ()=>{return '0';}, '==', '0');
@@ -67,9 +69,9 @@ let nanoTestFull=()=>{
         '!error'
     );
     nanoTest.run({
-        expected_ok:5,
+        expected_ok:7,
         expected_fail:11,
-        expected_error:2,
+        expected_error:1,
         expected_missing:1
     });
 };
